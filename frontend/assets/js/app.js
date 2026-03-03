@@ -2,115 +2,105 @@ import 'bootstrap';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const forms = document.querySelectorAll('[data-validate-form], [data-register-form]');
+    const registerForm = document.querySelector('[data-register-form]');
+    const filterForm = document.querySelector('[data-transaction-filter-form]');
 
-    const setInvalidState = (field, invalid, extraClass = null) => {
+    const setInvalidState = (field, invalid) => {
         if (!field) {
             return;
         }
 
         field.classList.toggle('is-invalid', invalid);
-        if (extraClass) {
-            field.classList.toggle(extraClass, !invalid && field.value !== '');
-        }
+        field.classList.toggle('is-valid', !invalid && field.value !== '');
     };
 
-    const validateField = (field) => {
-        if (!field) {
-            return true;
-        }
+    if (registerForm) {
+        const email = registerForm.querySelector('#email');
+        const emailConfirmation = registerForm.querySelector('#email_confirmation');
+        const password = registerForm.querySelector('#password');
+        const passwordConfirmation = registerForm.querySelector('#password_confirmation');
+        const strengthBar = registerForm.querySelector('[data-password-strength-bar]');
 
-        const value = field.value.trim();
-        let valid = true;
+        const validateEmails = () => {
+            const valid = email.value !== '' && emailConfirmation.value !== '' && email.value === emailConfirmation.value;
+            setInvalidState(emailConfirmation, !valid);
+            return valid;
+        };
 
-        if (field.hasAttribute('required') && value === '') {
-            valid = false;
-        }
+        const validatePasswords = () => {
+            const valid = password.value !== '' && passwordConfirmation.value !== '' && password.value === passwordConfirmation.value;
+            setInvalidState(passwordConfirmation, !valid);
+            return valid;
+        };
 
-        if (field.hasAttribute('minlength')) {
-            const minLength = Number.parseInt(field.getAttribute('minlength') ?? '0', 10);
-            if (value !== '' && value.length < minLength) {
-                valid = false;
+        const updateStrength = () => {
+            if (!strengthBar) {
+                return;
             }
-        }
 
-        if (field.hasAttribute('maxlength')) {
-            const maxLength = Number.parseInt(field.getAttribute('maxlength') ?? '0', 10);
-            if (value.length > maxLength) {
-                valid = false;
-            }
-        }
+            const value = password.value;
+            let score = 0;
 
-        if (field.type === 'email' && value !== '') {
-            valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-        }
+            if (value.length >= 8) score += 1;
+            if (/[A-Z]/.test(value)) score += 1;
+            if (/[0-9]/.test(value)) score += 1;
+            if (/[^A-Za-z0-9]/.test(value)) score += 1;
 
-        setInvalidState(field, !valid, 'is-valid');
-        return valid;
-    };
+            const widths = ['0%', '25%', '50%', '75%', '100%'];
+            const classes = ['bg-danger', 'bg-warning', 'bg-info', 'bg-primary', 'bg-success'];
 
-    const validatePasswordMatch = (password, passwordConfirmation) => {
-        if (!password || !passwordConfirmation) {
-            return true;
-        }
+            strengthBar.style.width = widths[score];
+            strengthBar.classList.remove(...classes);
+            strengthBar.classList.add(classes[score]);
+        };
 
-        const valid = password.value !== '' && passwordConfirmation.value !== '' && password.value === passwordConfirmation.value;
-        setInvalidState(passwordConfirmation, !valid, 'is-valid');
-        return valid;
-    };
-
-    const updateStrength = (password, strengthBar) => {
-        if (!password || !strengthBar) {
-            return;
-        }
-
-        const value = password.value;
-        let score = 0;
-
-        if (value.length >= 8) score += 1;
-        if (/[A-Z]/.test(value)) score += 1;
-        if (/[0-9]/.test(value)) score += 1;
-        if (/[^A-Za-z0-9]/.test(value)) score += 1;
-
-        const widths = ['0%', '25%', '50%', '75%', '100%'];
-        const classes = ['bg-danger', 'bg-warning', 'bg-info', 'bg-primary', 'bg-success'];
-
-        strengthBar.style.width = widths[score];
-        strengthBar.classList.remove(...classes);
-        strengthBar.classList.add(classes[score]);
-    };
-
-    forms.forEach((form) => {
-        const password = form.querySelector('input[name="password"]');
-        const passwordConfirmation = form.querySelector('input[name="password_confirmation"]');
-        const strengthBar = form.querySelector('[data-password-strength-bar]');
-        const fields = form.querySelectorAll('input, select, textarea');
-
-        fields.forEach((field) => {
-            field.addEventListener('input', () => {
-                validateField(field);
-                validatePasswordMatch(password, passwordConfirmation);
-                updateStrength(password, strengthBar);
-            });
+        emailConfirmation.addEventListener('input', validateEmails);
+        email.addEventListener('input', validateEmails);
+        passwordConfirmation.addEventListener('input', validatePasswords);
+        password.addEventListener('input', () => {
+            validatePasswords();
+            updateStrength();
         });
 
-        form.addEventListener('submit', (event) => {
-            let valid = true;
+        registerForm.addEventListener('submit', (event) => {
+            const emailsValid = validateEmails();
+            const passwordsValid = validatePasswords();
 
-            fields.forEach((field) => {
-                if (!validateField(field)) {
-                    valid = false;
-                }
-            });
-
-            if (!validatePasswordMatch(password, passwordConfirmation)) {
-                valid = false;
-            }
-
-            if (!valid) {
+            if (!emailsValid || !passwordsValid || !registerForm.checkValidity()) {
                 event.preventDefault();
                 event.stopPropagation();
+                registerForm.classList.add('was-validated');
             }
         });
-    });
+    }
+
+    if (filterForm) {
+        const dateFrom = filterForm.querySelector('#date_from');
+        const dateTo = filterForm.querySelector('#date_to');
+
+        filterForm.addEventListener('submit', (event) => {
+            if (!dateFrom || !dateTo || dateFrom.value === '' || dateTo.value === '') {
+                return;
+            }
+
+            if (dateFrom.value > dateTo.value) {
+                event.preventDefault();
+                event.stopPropagation();
+                setInvalidState(dateTo, true);
+            }
+        });
+
+        dateFrom?.addEventListener('change', () => {
+            if (dateTo && dateFrom.value !== '' && dateTo.value !== '' && dateFrom.value <= dateTo.value) {
+                setInvalidState(dateTo, false);
+            }
+        });
+
+        dateTo?.addEventListener('change', () => {
+            if (dateFrom && dateFrom.value !== '' && dateTo.value !== '' && dateFrom.value <= dateTo.value) {
+                setInvalidState(dateTo, false);
+            }
+        });
+    }
 });
+
