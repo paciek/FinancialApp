@@ -1,4 +1,4 @@
-import 'bootstrap';
+﻿import 'bootstrap';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,18 +10,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         field.classList.toggle('is-invalid', invalid);
+
         if (extraClass) {
-            field.classList.toggle(extraClass, !invalid && field.value !== '');
+            field.classList.toggle(extraClass, !invalid && field.value.trim() !== '');
         }
     };
 
-    const validateField = (field) => {
-        if (!field) {
+    const validateRadioGroup = (field) => {
+        const group = field.form?.querySelectorAll(`input[type="radio"][name="${field.name}"]`);
+        if (!group || group.length === 0) {
             return true;
         }
 
-        const value = field.value.trim();
+        const checked = Array.from(group).some((radio) => radio.checked);
+        group.forEach((radio) => radio.classList.toggle('is-invalid', !checked));
+
+        return checked;
+    };
+
+    const validateField = (field) => {
+        if (!field || field.disabled) {
+            return true;
+        }
+
         let valid = true;
+        const value = field.value.trim();
+
+        if (field.type === 'radio') {
+            if (field.required && !validateRadioGroup(field)) {
+                valid = false;
+            }
+
+            return valid;
+        }
 
         if (field.hasAttribute('required') && value === '') {
             valid = false;
@@ -41,11 +62,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        if (field.tagName === 'SELECT' && field.required && value === '') {
+            valid = false;
+        }
+
         if (field.type === 'email' && value !== '') {
             valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
         }
 
         setInvalidState(field, !valid, 'is-valid');
+
         return valid;
     };
 
@@ -54,8 +80,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return true;
         }
 
-        const valid = password.value !== '' && passwordConfirmation.value !== '' && password.value === passwordConfirmation.value;
+        const valid =
+            password.value !== '' &&
+            passwordConfirmation.value !== '' &&
+            password.value === passwordConfirmation.value;
+
         setInvalidState(passwordConfirmation, !valid, 'is-valid');
+
         return valid;
     };
 
@@ -91,6 +122,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 validateField(field);
                 validatePasswordMatch(password, passwordConfirmation);
                 updateStrength(password, strengthBar);
+            });
+
+            field.addEventListener('change', () => {
+                validateField(field);
+                validatePasswordMatch(password, passwordConfirmation);
             });
         });
 

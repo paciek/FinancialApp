@@ -1,6 +1,11 @@
-@import 'bootstrap/scss/bootstrap';
+﻿@import 'bootstrap/scss/bootstrap';
 
-.register-card {
+.register-card,
+.password-change-card,
+.category-form-card {
+    width: 100%;
+    max-width: 36rem;
+    margin: 0 auto;
     border: 0;
     border-radius: 1rem;
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
@@ -19,11 +24,17 @@
     transition: width 0.2s ease;
 }
 
-.password-change-card {
-    width: 100%;
-    max-width: 36rem;
-    margin: 0 auto;
-    border: 0;
-    border-radius: 1rem;
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
+.type-badge {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.type-badge--income {
+    background-color: #d1e7dd;
+    color: #0f5132;
+}
+
+.type-badge--expense {
+    background-color: #f8d7da;
+    color: #842029;
 }
