@@ -1,59 +1,363 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# FinancialApp
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Laravel 12 application for user registration flow (`/register`) with Bootstrap 5 + Font Awesome frontend assets built by Vite.  
+Project is containerized with Docker Compose (PHP-FPM, Nginx, MySQL, phpMyAdmin).
 
-## About Laravel
+## Wymagania
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Docker + Docker Compose
+- Git
+- (Opcjonalnie, poza Dockerem) PHP 8.2+, Composer 2+, Node.js LTS, npm
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Szybki start (TL;DR)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```bash
+git clone <REPO_URL>
+cd FinancialApp
+cp .env.example .env
+docker compose up -d --build
+docker compose exec app composer install
+docker compose exec app php artisan key:generate
+docker compose exec app php artisan migrate
+docker compose exec app npm install
+docker compose exec app npm run build
+```
 
-## Learning Laravel
+Uruchomienie aplikacji: `http://localhost:8080`.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Instalacja i uruchomienie lokalne (krok po kroku)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1) Klonowanie repo
 
-## Laravel Sponsors
+```bash
+git clone <REPO_URL>
+cd FinancialApp
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Opis: Pobiera kod i przechodzi do katalogu projektu.
 
-### Premium Partners
+### 2) Konfiguracja `.env`
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+cp .env.example .env
+```
 
-## Contributing
+Opis: Tworzy lokalny plik konfiguracyjny.  
+Uwaga: W tym repo `APP_LOCALE=pl`, `DB_HOST=db`, `DB_PORT=3306`, `QUEUE_CONNECTION=database`, `SESSION_DRIVER=database`, `CACHE_STORE=database`.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Nastepnie wygeneruj klucz aplikacji:
 
-## Code of Conduct
+```bash
+docker compose exec app php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Opis: Ustawia poprawne `APP_KEY` w `.env`.
 
-## Security Vulnerabilities
+### 3) Uruchomienie kontenerow
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+docker compose up -d --build
+```
 
-## License
+Opis: Buduje i uruchamia uslugi z `docker-compose.yml`.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 4) Instalacja zaleznosci backend (Composer)
+
+```bash
+docker compose exec app composer install
+```
+
+Opis: Instaluje pakiety PHP z `composer.json`.
+
+### 5) Instalacja zaleznosci frontend (npm)
+
+```bash
+docker compose exec app npm install
+```
+
+Opis: Instaluje paczki JS/CSS z `package.json`.
+
+### 6) Build frontendu (Vite)
+
+```bash
+docker compose exec app npm run build
+```
+
+Opis: Buduje assety do `public/frontend/assets` oraz generuje `manifest.json`.
+
+### 7) Migracje i seed
+
+```bash
+docker compose exec app php artisan migrate
+docker compose exec app php artisan db:seed
+```
+
+Opis: Tworzy tabele (`users`, `sessions`, `jobs`, `cache` itd.) i uruchamia seedery.
+
+### 8) (Opcjonalnie) link storage i cache
+
+```bash
+docker compose exec app php artisan storage:link
+docker compose exec app php artisan optimize:clear
+```
+
+Opis: `storage:link` tylko gdy aplikacja zacznie korzystac z plikow publicznych; `optimize:clear` czysci cache frameworka.
+
+## Dostep / URL-e / Porty
+
+Na podstawie `docker-compose.yml`:
+
+- Aplikacja HTTP (Nginx): `http://localhost:8080`
+- phpMyAdmin: `http://localhost:8081`
+- MySQL host port: `localhost:3306`
+
+Nazwy kontenerow:
+
+- `financialapp_app` (service: `app`, PHP-FPM + Composer + Node)
+- `financialapp_web` (service: `web`, Nginx)
+- `financialapp_db` (service: `db`, MySQL 8.4)
+- `financialapp_pma` (service: `phpmyadmin`)
+
+Wolumen:
+
+- `dbdata` (dane MySQL)
+
+## Najwazniejsze komendy
+
+### A) Docker / Docker Compose
+
+```bash
+docker compose up -d --build
+```
+
+Buduje obrazy i uruchamia kontenery w tle.
+
+```bash
+docker compose down
+```
+
+Zatrzymuje i usuwa kontenery/siec utworzone przez Compose.
+
+```bash
+docker compose ps
+```
+
+Pokazuje status uslug.
+
+```bash
+docker compose logs -f
+```
+
+Podglad logow wszystkich uslug w czasie rzeczywistym.
+
+```bash
+docker compose logs -f app
+```
+
+Podglad logow tylko jednej uslugi.
+
+```bash
+docker compose exec app <komenda>
+```
+
+Wykonanie polecenia w kontenerze aplikacji, np. `php artisan ...`, `composer ...`, `npm ...`.
+
+```bash
+docker compose build app --no-cache
+```
+
+Pelny rebuild uslugi `app` bez cache.
+
+```bash
+docker compose up -d --build app
+```
+
+Rebuild i restart tylko uslugi `app`.
+
+```bash
+docker system prune
+```
+
+Usuwa nieuzywane zasoby Dockera. Uwaga: moze usunac obrazy i cache potrzebne innym projektom.
+
+### B) Laravel (Artisan)
+
+```bash
+docker compose exec app php artisan key:generate
+```
+
+Generuje `APP_KEY`.
+
+```bash
+docker compose exec app php artisan migrate
+```
+
+Uruchamia migracje.
+
+```bash
+docker compose exec app php artisan migrate:fresh --seed
+```
+
+Kasuje wszystkie tabele i odtwarza baze z seederami.
+
+```bash
+docker compose exec app php artisan db:seed
+```
+
+Uruchamia seedery.
+
+```bash
+docker compose exec app php artisan route:list
+```
+
+Wyswietla liste tras.
+
+```bash
+docker compose exec app php artisan tinker
+```
+
+Interaktywna konsola Laravela.
+
+```bash
+docker compose exec app php artisan queue:work
+docker compose exec app php artisan queue:listen
+```
+
+Obsluga kolejek (w `.env` domyslnie `QUEUE_CONNECTION=database`).
+
+```bash
+docker compose exec app php artisan config:cache
+docker compose exec app php artisan route:cache
+docker compose exec app php artisan view:cache
+docker compose exec app php artisan cache:clear
+```
+
+Budowanie i czyszczenie cache.
+
+```bash
+docker compose exec app php artisan storage:link
+```
+
+Tworzy link `public/storage`.
+
+```bash
+docker compose exec app php artisan test
+```
+
+Uruchamia testy (w `phpunit.xml` testy dzialaja na SQLite in-memory).
+
+### C) Frontend (npm)
+
+```bash
+docker compose exec app npm install
+```
+
+Instaluje zaleznosci frontendowe.
+
+```bash
+docker compose exec app npm run dev
+```
+
+Uruchamia Vite dev server.
+
+```bash
+docker compose exec app npm run build
+```
+
+Buduje produkcyjne assety do `public/frontend/assets`.
+
+Do uzupelnienia: brak skryptow `npm run test` i `npm run lint` w `package.json`.
+
+## Typowe problemy (Troubleshooting)
+
+### 1) `No application encryption key has been specified`
+
+```bash
+docker compose exec app php artisan key:generate
+```
+
+### 2) Blad polaczenia z baza danych
+
+Sprawdz:
+
+- Czy kontener `db` dziala: `docker compose ps`
+- Czy `.env` ma `DB_HOST=db`, `DB_PORT=3306`
+- Czy migracje sa wykonane: `docker compose exec app php artisan migrate`
+
+### 3) Port 8080/8081/3306 zajety
+
+Zmien mapowania portow w `docker-compose.yml` i uruchom ponownie:
+
+```bash
+docker compose down
+docker compose up -d --build
+```
+
+### 4) Brak stylow/ikon po zmianach frontendu
+
+```bash
+docker compose exec app npm run build
+```
+
+Sprawdz czy istnieje `public/frontend/assets/manifest.json`.
+
+### 5) Uprawnienia do `storage`/`bootstrap/cache`
+
+W kontenerze:
+
+```bash
+docker compose exec app sh -lc "chown -R www-data:www-data storage bootstrap/cache"
+docker compose exec app sh -lc "chmod -R ug+rw storage bootstrap/cache"
+```
+
+### 6) `php` niedostepny na hoście
+
+W tym projekcie uruchamiaj `php artisan` przez kontener:
+
+```bash
+docker compose exec app php artisan <komenda>
+```
+
+## Srodowiska (dev/prod) i bezpieczenstwo
+
+### Dev (aktualnie dostepne)
+
+- Dostepny jeden plik Compose: `docker-compose.yml`
+- `APP_ENV=local`, `APP_DEBUG=true` (w `.env.example`)
+- W projekcie jest `composer` script `dev` (lokalny multitool: `artisan serve`, queue, logs, vite), ale w tym repo glowna sciezka to Docker.
+
+### Prod
+
+Do uzupelnienia:
+
+- Brak dedykowanego `docker-compose.prod.yml` lub innej jawnej konfiguracji production w repo.
+- Brak opisanych procedur CI/CD, release i rollback.
+
+### Bezpieczenstwo
+
+- Nie commituj prywatnych hasel i kluczy do `.env` (w tym repo `.env.example` zawiera wartosci, ktore nalezy zweryfikowac przed publikacja).
+- W production ustaw `APP_DEBUG=false`.
+- Dla production uzyj cache:
+  - `php artisan config:cache`
+  - `php artisan route:cache`
+  - `php artisan view:cache`
+
+## Architektura (skrot)
+
+Przeplyw:
+
+`Browser -> Nginx (service web) -> PHP-FPM (service app) -> MySQL (service db)`
+
+Dodatkowo:
+
+- Frontend assety budowane przez Vite w kontenerze `app`.
+- phpMyAdmin jako narzedzie administracyjne DB.
+
+## Checklista po starcie
+
+- [ ] `docker compose ps` pokazuje wszystkie uslugi jako `Up`
+- [ ] `http://localhost:8080/register` dziala
+- [ ] `docker compose exec app php artisan migrate` wykonuje sie bez bledow
+- [ ] `docker compose exec app npm run build` tworzy aktualne assety
+- [ ] `docker compose exec app php artisan test` przechodzi
+
