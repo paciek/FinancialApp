@@ -7,6 +7,7 @@
         "dev": "vite"
     },
     "devDependencies": {
+        "@rollup/rollup-win32-x64-msvc": "^4.59.0",
         "sass": "^1.97.3",
         "vite": "^7.0.7"
     },

@@ -1,4 +1,4 @@
-@use 'bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/bootstrap';
 
 .register-card {
     border: 0;
@@ -17,4 +17,13 @@
     height: 100%;
     width: 0;
     transition: width 0.2s ease;
+}
+
+.password-change-card {
+    width: 100%;
+    max-width: 36rem;
+    margin: 0 auto;
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
 }
