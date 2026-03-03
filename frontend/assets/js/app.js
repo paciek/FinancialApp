@@ -3,6 +3,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 document.addEventListener('DOMContentLoaded', () => {
     const forms = document.querySelectorAll('[data-validate-form], [data-register-form]');
+    const deleteForms = document.querySelectorAll('[data-confirm-delete]');
 
     const setInvalidState = (field, invalid, extraClass = null) => {
         if (!field) {
@@ -144,6 +145,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (!valid) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
+    });
+
+    deleteForms.forEach((form) => {
+        form.addEventListener('submit', (event) => {
+            const accepted = window.confirm('Czy na pewno chcesz usunąć tę kategorię?');
+
+            if (!accepted) {
                 event.preventDefault();
                 event.stopPropagation();
             }

@@ -23,5 +23,5 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/profile/password', [PasswordController::class, 'edit'])->name('profile.password.edit');
     Route::put('/profile/password', [PasswordController::class, 'update'])->name('profile.password.update');
 
-    Route::resource('categories', CategoryController::class)->only(['index', 'create', 'store']);
+    Route::resource('categories', CategoryController::class);
 });

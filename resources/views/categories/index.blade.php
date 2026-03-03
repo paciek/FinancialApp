@@ -23,7 +23,7 @@
                             <tr>
                                 <th>Nazwa</th>
                                 <th>Typ</th>
-                                <th class="text-end">Utworzono</th>
+                                <th class="text-end">Akcje</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,7 +35,21 @@
                                             {{ $category->type === 'income' ? 'Przychód' : 'Wydatek' }}
                                         </span>
                                     </td>
-                                    <td class="text-end text-muted">{{ $category->created_at->format('Y-m-d H:i') }}</td>
+                                    <td class="text-end">
+                                        <div class="d-inline-flex gap-2">
+                                            <a href="{{ route('categories.edit', $category) }}" class="btn btn-sm btn-outline-primary">
+                                                <i class="fa-solid fa-pen"></i> Edytuj
+                                            </a>
+
+                                            <form method="POST" action="{{ route('categories.destroy', $category) }}" data-confirm-delete>
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                    <i class="fa-solid fa-trash"></i> Usuń
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>

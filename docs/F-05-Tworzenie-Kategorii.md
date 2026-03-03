@@ -1,4 +1,4 @@
-﻿# F-05 Tworzenie Kategorii
+# F-05 Tworzenie Kategorii
 
 ## 1. Cel funkcjonalności
 Umożliwienie zalogowanemu użytkownikowi tworzenia własnych kategorii finansowych typu przychód lub wydatek.
@@ -78,4 +78,46 @@ Frontend (`frontend/assets/js/app.js`):
 - Testy przechodzą.
 - Bootstrap + FontAwesome działają przez Vite.
 - Dokumentacja istnieje.
+- Kod zgodny ze strukturą Laravel.
+
+## F-06 — Edycja i usuwanie
+
+### Policy
+- Dodano `CategoryPolicy` z metodami `update` i `delete`.
+- Dostęp do edycji/usuwania ma wyłącznie właściciel rekordu (`$user->id === $category->user_id`).
+- Policy jest zarejestrowana w `AuthServiceProvider`.
+
+### Update Flow
+1. Użytkownik wchodzi na `GET /categories/{category}/edit`.
+2. Kontroler wykonuje `$this->authorize('update', $category)`.
+3. Formularz wysyła `PUT /categories/{category}`.
+4. `UpdateCategoryRequest` waliduje dane i unikalność nazwy w obrębie użytkownika.
+5. Po sukcesie redirect na `categories.index` z komunikatem `Kategoria została zaktualizowana.`.
+
+### Delete Flow
+1. Użytkownik klika `Usuń` na liście kategorii.
+2. JS wyświetla `confirm()`.
+3. Formularz wysyła `DELETE /categories/{category}`.
+4. Kontroler wykonuje `$this->authorize('delete', $category)` i usuwa rekord.
+5. Redirect na `categories.index` z komunikatem `Kategoria została usunięta.`.
+
+### Test Cases
+- Użytkownik może edytować swoją kategorię.
+- Użytkownik nie może edytować cudzej kategorii.
+- Użytkownik może usunąć swoją kategorię.
+- Użytkownik nie może usunąć cudzej kategorii.
+- Walidacja update działa.
+- Unikalność nazwy per użytkownik działa przy update.
+
+### Definition of Done (F-06)
+- Lista kategorii działa.
+- Edycja działa.
+- Usuwanie działa.
+- Policy zabezpiecza rekordy.
+- Walidacja update działa.
+- Unikalność per użytkownik działa.
+- Confirm przy usuwaniu działa.
+- Testy przechodzą.
+- Bootstrap + FA działają.
+- Dokumentacja jest zaktualizowana.
 - Kod zgodny ze strukturą Laravel.
