@@ -17,6 +17,7 @@ Route::middleware('guest')->group(function (): void {
 
 Route::middleware('auth')->group(function (): void {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::redirect('/profile', '/profile/password');
     Route::get('/profile/password', [PasswordController::class, 'edit'])->name('profile.password.edit');
     Route::put('/profile/password', [PasswordController::class, 'update'])->name('profile.password.update');
 });
