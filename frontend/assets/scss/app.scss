@@ -1,0 +1,20 @@
+@import 'bootstrap/scss/bootstrap';
+
+.register-card {
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
+}
+
+.password-strength {
+    height: 0.5rem;
+    background: #e9ecef;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.password-strength__bar {
+    height: 100%;
+    width: 0;
+    transition: width 0.2s ease;
+}
