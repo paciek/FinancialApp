@@ -123,5 +123,22 @@ class RegisterTest extends TestCase
             ->assertRedirect(route('register'))
             ->assertSessionHasErrors(['email_confirmation']);
     }
-}
 
+    public function test_login_must_match_alpha_dash_rule_with_polish_message(): void
+    {
+        $response = $this->from(route('register'))->post(route('register.store'), [
+            'login' => 'jan kowalski!',
+            'email' => 'new@example.com',
+            'email_confirmation' => 'new@example.com',
+            'password' => 'Haslo123!',
+            'password_confirmation' => 'Haslo123!',
+            'terms' => '1',
+        ]);
+
+        $response
+            ->assertRedirect(route('register'))
+            ->assertSessionHasErrors([
+                'login' => 'Login moze zawierac tylko litery, cyfry, myslnik i podkreslenie.',
+            ]);
+    }
+}

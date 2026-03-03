@@ -1,16 +1,26 @@
-﻿# F-01 Rejestracja
+# F-01 Rejestracja
 
-## 1. Cel biznesowy
+## Cel
+
 Umozliwienie gosciowi utworzenia konta w aplikacji i przejscia do ekranu logowania po poprawnej rejestracji.
 
-## 2. Zakres wdrozenia
-- Formularz rejestracji w Bootstrap 5 z ikonami FontAwesome.
-- Walidacja frontend (HTML5 + JS) oraz backend (FormRequest).
+## Zakres
+
+- Formularz rejestracji dostepny pod `/register`.
+- Walidacja po stronie frontend (HTML5 + JavaScript) i backend (Laravel `FormRequest`).
 - Zapis nowego uzytkownika do tabeli `users`.
-- Przekierowanie po sukcesie na `login` z komunikatem sukcesu.
+- Przekierowanie po sukcesie na `/login` z komunikatem sukcesu.
 - Brak automatycznego logowania po rejestracji.
 
-## 3. Struktura plikow
+## Warunki wstepne
+
+- Aplikacja uruchomiona (np. przez Docker Compose).
+- Wykonane migracje bazy danych.
+- Dostepna tabela `users` z kolumna `login` (migracja `2026_03_02_170800_add_login_to_users_table.php`).
+- Assety frontend zbudowane (`npm run build`) lub uruchomiony dev server Vite.
+
+## Struktura techniczna
+
 - `frontend/assets/js/app.js`
 - `frontend/assets/scss/app.scss`
 - `vite.config.js`
@@ -24,56 +34,74 @@ Umozliwienie gosciowi utworzenia konta w aplikacji i przejscia do ekranu logowan
 - `routes/web.php`
 - `tests/Feature/Auth/RegisterTest.php`
 
-## 4. Wymagania srodowiskowe
-- PHP 8.2+
-- Composer 2+
-- Node.js 20+
-- npm 10+
-- Relacyjna baza danych zgodna z Laravel
+## Kroki (scenariusz glowny)
 
-## 5. Instrukcja uruchomienia
-```bash
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-npm install
-npm run build
-php artisan serve
-```
+1. Uzytkownik wchodzi na `/register`.
+2. Uzytkownik uzupelnia formularz poprawnymi danymi:
+   - `login`
+   - `email`
+   - `email_confirmation`
+   - `password`
+   - `password_confirmation`
+   - `terms` (akceptacja regulaminu)
+3. Uzytkownik wysyla formularz.
+4. Backend waliduje dane (`RegisterRequest`).
+5. System tworzy nowy rekord w `users` (`RegisterController@register`).
+6. System przekierowuje na `/login` i ustawia komunikat sukcesu.
 
-## 6. Informacja o migracji
-Dodano migracje `2026_03_02_170800_add_login_to_users_table.php`, ktora rozszerza tabele `users` o kolumne `login` z unikalnym indeksem.
+## Walidacje
 
-## 7. Opis walidacji
-Backend (`RegisterRequest`):
-- `login`: required|string|min:3|max:50|unique:users|alpha_dash
-- `email`: required|email|max:255|unique:users
-- `email_confirmation`: required|same:email
-- `password`: required|min:8|confirmed
-- `password_confirmation`: required
-- `terms`: required|accepted
+### Backend (RegisterRequest)
 
-Frontend:
-- `required`, `type=email`, `minlength`, `maxlength`, `invalid-feedback`.
-- JS porownuje `email` z `email_confirmation` i `password` z `password_confirmation`.
-- Dynamicznie ustawia `is-invalid` i blokuje submit przy bledach.
+- `login`: `required|string|min:3|max:50|unique:users,login|alpha_dash`
+- `email`: `required|email|max:255|unique:users,email`
+- `email_confirmation`: `required|same:email`
+- `password`: `required|min:8|confirmed`
+- `password_confirmation`: `required`
+- `terms`: `required|accepted`
 
-## 8. Scenariusz testowy
-1. Wejdz na `/register`.
-2. Wypelnij formularz poprawnymi danymi i zaakceptuj regulamin.
-3. Zatwierdz formularz.
-4. Oczekiwany rezultat: przekierowanie na `/login` i komunikat `Konto zostalo utworzone. Zaloguj sie.`.
-5. Powtorz z duplikatem loginu/email oraz bez `terms` i zweryfikuj bledy inline.
+### Frontend
 
-## 9. Definition of Done
-- Formularz dziala.
-- Backend validation dziala.
-- Inline bledy dzialaja.
-- Regulamin wymagany.
-- Redirect na login z komunikatem.
-- Testy przechodza.
-- Bootstrap + FontAwesome dzialaja przez Vite.
-- Dokumentacja istnieje.
-- Kod zgodny ze struktura Laravel.
+- Atrybuty HTML5: `required`, `type=email`, `minlength`, `maxlength`.
+- Komunikaty `invalid-feedback` w formularzu.
+- JavaScript porownuje:
+  - `email` z `email_confirmation`
+  - `password` z `password_confirmation`
+- Przy bledach formularz nie jest wysylany i pola dostaja klasy walidacyjne.
+
+## Przypadki negatywne
+
+- Duplikat `login` -> blad walidacji pola `login`.
+- Duplikat `email` -> blad walidacji pola `email`.
+- Brak akceptacji `terms` -> blad walidacji pola `terms`.
+- Rozne hasla (`password` vs `password_confirmation`) -> blad pola `password`.
+- Rozne adresy email (`email` vs `email_confirmation`) -> blad pola `email_confirmation`.
+- Login z niedozwolonymi znakami (np. spacja, `!`) -> blad reguly `alpha_dash`.
+
+## Rezultat
+
+### Sukces
+
+- Rekord uzytkownika zapisany w bazie.
+- Przekierowanie na `/login`.
+- Komunikat: `Konto zostalo utworzone. Zaloguj sie.` (tresc moze zalezec od kodowania/pliku jezykowego).
+
+### Niepowodzenie
+
+- Brak zapisu do bazy.
+- Powrot do formularza rejestracji.
+- Wyswietlenie bledow walidacji przy odpowiednich polach.
+
+## Kryteria akceptacji
+
+- Formularz rejestracji jest dostepny i wyswietla wszystkie wymagane pola.
+- Walidacja backend i frontend dziala zgodnie z regalami.
+- Pole `terms` jest wymagane.
+- Po poprawnej rejestracji nastepuje redirect na `/login`.
+- Testy funkcjonalne dla rejestracji przechodza (`tests/Feature/Auth/RegisterTest.php`).
+
+## Do uzupelnienia
+
+- Finalna tresc komunikatow UI z polskimi znakami (w repo wystepuja pliki z mieszanym kodowaniem).
+- Jednoznaczna polityka kodowania plikow tekstowych (zalecane UTF-8 bez BOM).
 
