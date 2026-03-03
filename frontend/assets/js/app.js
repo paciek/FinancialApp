@@ -3,6 +3,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 document.addEventListener('DOMContentLoaded', () => {
     const forms = document.querySelectorAll('[data-validate-form], [data-register-form]');
+    const deleteForms = document.querySelectorAll('[data-confirm-delete]');
+    const transactionForms = document.querySelectorAll('[data-transaction-form]');
 
     const setInvalidState = (field, invalid, extraClass = null) => {
         if (!field) {
@@ -10,13 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         field.classList.toggle('is-invalid', invalid);
+
         if (extraClass) {
             field.classList.toggle(extraClass, !invalid && field.value !== '');
         }
     };
 
     const validateField = (field) => {
-        if (!field) {
+        if (!field || field.disabled) {
             return true;
         }
 
@@ -92,6 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 validatePasswordMatch(password, passwordConfirmation);
                 updateStrength(password, strengthBar);
             });
+
+            field.addEventListener('change', () => {
+                validateField(field);
+                validatePasswordMatch(password, passwordConfirmation);
+                updateStrength(password, strengthBar);
+            });
         });
 
         form.addEventListener('submit', (event) => {
@@ -113,4 +122,72 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    deleteForms.forEach((form) => {
+        form.addEventListener('submit', (event) => {
+            const confirmed = window.confirm('Czy na pewno chcesz usunac ten rekord?');
+
+            if (!confirmed) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
+    });
+
+    transactionForms.forEach((form) => {
+        const typeField = form.querySelector('[data-transaction-type]');
+        const categorySelect = form.querySelector('[data-category-select]');
+        const amountField = form.querySelector('[data-amount-field]');
+
+        const updateAmountColor = () => {
+            if (!typeField || !amountField) {
+                return;
+            }
+
+            amountField.classList.remove('text-success', 'text-danger');
+
+            if (typeField.value === 'income') {
+                amountField.classList.add('text-success');
+            }
+
+            if (typeField.value === 'expense') {
+                amountField.classList.add('text-danger');
+            }
+        };
+
+        const filterCategories = () => {
+            if (!typeField || !categorySelect) {
+                return;
+            }
+
+            const selectedType = typeField.value;
+            const options = categorySelect.querySelectorAll('option[data-type]');
+
+            options.forEach((option) => {
+                const shouldShow = selectedType === '' || option.dataset.type === selectedType;
+                option.hidden = !shouldShow;
+            });
+
+            const selectedOption = categorySelect.options[categorySelect.selectedIndex];
+            if (selectedOption && selectedOption.dataset.type && selectedOption.dataset.type !== selectedType && selectedType !== '') {
+                categorySelect.value = '';
+            }
+        };
+
+        if (typeField) {
+            typeField.addEventListener('change', () => {
+                filterCategories();
+                updateAmountColor();
+                validateField(typeField);
+
+                if (categorySelect) {
+                    validateField(categorySelect);
+                }
+            });
+        }
+
+        filterCategories();
+        updateAmountColor();
+    });
 });
+
