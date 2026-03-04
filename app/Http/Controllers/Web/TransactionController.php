@@ -40,6 +40,17 @@ class TransactionController extends Controller
             ->with('success', 'Transakcja została dodana.');
     }
 
+    public function destroy(Transaction $transaction): RedirectResponse
+    {
+        abort_if($transaction->user_id !== (int) auth()->id(), 403);
+
+        $transaction->delete();
+
+        return redirect()
+            ->route('transactions.index')
+            ->with('success', 'Transakcja została usunięta.');
+    }
+
     public function index(Request $request): View
     {
         $request->validate([

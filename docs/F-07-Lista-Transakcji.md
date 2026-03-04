@@ -56,3 +56,37 @@ Plik: `tests/Feature/Transaction/SortTransactionTest.php`
 - [x] Walidacja zabezpiecza kolumny
 - [x] Testy przechodza
 
+## F-11 - Usuwanie (Soft Delete)
+
+### Mechanizm soft delete
+- tabela `transactions` zawiera kolumne `deleted_at`
+- model `Transaction` uzywa traitu `SoftDeletes`
+- usuwanie realizowane przez `$transaction->delete()` zamiast hard delete
+
+### Modal potwierdzenia
+Na liscie transakcji przycisk usuwania otwiera modal Bootstrap z ostrzezeniem i formularzem `DELETE`:
+- przycisk `Anuluj`
+- przycisk `Usun` wykonujacy `DELETE /transactions/{transaction}`
+
+### Bezpieczenstwo
+- trasa `transactions.destroy` jest w middleware `auth`
+- kontroler sprawdza wlasciciela:
+  - `abort_if($transaction->user_id !== auth()->id(), 403);`
+- soft deleted transakcje sa domyslnie ukryte na liscie (brak `withTrashed()`)
+
+### Test Cases
+Plik: `tests/Feature/Transaction/DeleteTransactionTest.php`
+1. Uzytkownik moze usunac swoja transakcje.
+2. Rekord jest soft deleted (`assertSoftDeleted`).
+3. Usunieta transakcja nie widnieje na liscie.
+4. Uzytkownik nie moze usunac cudzej transakcji (`403`).
+5. Gosc nie moze usuwac (redirect do login).
+
+### Definition of Done
+- [x] Soft delete dziala
+- [x] `deleted_at` w bazie
+- [x] Modal potwierdzenia dziala
+- [x] Usunieta transakcja znika z listy
+- [x] Brak hard delete
+- [x] Brak dostepu do cudzych danych
+- [x] Testy przechodza

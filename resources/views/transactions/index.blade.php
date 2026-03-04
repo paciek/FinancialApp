@@ -137,9 +137,42 @@
                                         <button type="button" class="btn btn-sm btn-outline-primary" disabled>
                                             <i class="fa-solid fa-pen"></i> Edytuj
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-outline-danger" disabled>
-                                            <i class="fa-solid fa-trash"></i> Usun
+                                        <button
+                                            type="button"
+                                            class="btn btn-sm btn-danger"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal{{ $transaction->id }}"
+                                        >
+                                            <i class="fa-solid fa-trash"></i>
                                         </button>
+                                        <div class="modal fade" id="deleteModal{{ $transaction->id }}" tabindex="-1" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">
+                                                            <i class="fa-solid fa-triangle-exclamation text-danger"></i>
+                                                            Potwierdz usuniecie
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Czy na pewno chcesz usunac te transakcje?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                            Anuluj
+                                                        </button>
+                                                        <form method="POST" action="{{ route('transactions.destroy', $transaction) }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">
+                                                                <i class="fa-solid fa-trash"></i> Usun
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty
