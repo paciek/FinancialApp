@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Auth\RegisterController;
 use App\Http\Controllers\Web\Profile\PasswordController;
+use App\Http\Controllers\Web\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/register');
@@ -19,4 +20,10 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('/profile/password', [PasswordController::class, 'edit'])->name('profile.password.edit');
     Route::put('/profile/password', [PasswordController::class, 'update'])->name('profile.password.update');
+
+    Route::resource('transactions', TransactionController::class)
+        ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+
+    Route::get('/api/categories', [TransactionController::class, 'categoriesApi'])
+        ->name('api.categories');
 });

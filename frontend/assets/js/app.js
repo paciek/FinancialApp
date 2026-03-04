@@ -3,6 +3,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 document.addEventListener('DOMContentLoaded', () => {
     const forms = document.querySelectorAll('[data-validate-form], [data-register-form]');
+    const filterForm = document.querySelector('[data-transaction-filter-form]');
+    const editTransactionForm = document.querySelector('[data-edit-transaction-form]');
 
     const setInvalidState = (field, invalid, extraClass = null) => {
         if (!field) {
@@ -113,4 +115,77 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    if (filterForm) {
+        const dateFrom = filterForm.querySelector('#date_from');
+        const dateTo = filterForm.querySelector('#date_to');
+
+        filterForm.addEventListener('submit', (event) => {
+            if (!dateFrom || !dateTo || dateFrom.value === '' || dateTo.value === '') {
+                return;
+            }
+
+            if (dateFrom.value > dateTo.value) {
+                event.preventDefault();
+                event.stopPropagation();
+                setInvalidState(dateTo, true, null);
+            }
+        });
+    }
+
+    if (editTransactionForm) {
+        const typeSelect = editTransactionForm.querySelector('#typeSelect');
+        const categorySelect = editTransactionForm.querySelector('#categorySelect');
+
+        const refreshCategories = async () => {
+            if (!typeSelect || !categorySelect) {
+                return;
+            }
+
+            const selectedCategory = categorySelect.getAttribute('data-selected-category');
+            const currentValue = categorySelect.value || selectedCategory || '';
+
+            try {
+                const response = await fetch(`/api/categories?type=${encodeURIComponent(typeSelect.value)}`, {
+                    headers: {
+                        Accept: 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    credentials: 'same-origin',
+                });
+
+                if (!response.ok) {
+                    return;
+                }
+
+                const categories = await response.json();
+                categorySelect.innerHTML = '';
+
+                categories.forEach((category) => {
+                    const option = document.createElement('option');
+                    option.value = String(category.id);
+                    option.textContent = category.name;
+                    if (String(category.id) === String(currentValue)) {
+                        option.selected = true;
+                    }
+                    categorySelect.appendChild(option);
+                });
+
+                if (categorySelect.options.length === 0) {
+                    const emptyOption = document.createElement('option');
+                    emptyOption.value = '';
+                    emptyOption.textContent = 'Brak kategorii dla wybranego typu';
+                    categorySelect.appendChild(emptyOption);
+                }
+            } catch (error) {
+                // Keep current options when request fails.
+            }
+        };
+
+        typeSelect?.addEventListener('change', () => {
+            refreshCategories();
+        });
+
+        refreshCategories();
+    }
 });
