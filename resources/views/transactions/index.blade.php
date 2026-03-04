@@ -65,8 +65,8 @@
                 <label for="type" class="form-label">Typ</label>
                 <select id="type" name="type" class="form-select">
                     <option value="">Wszystkie</option>
-                    <option value="income" @selected(request('type') === 'income')>income</option>
-                    <option value="expense" @selected(request('type') === 'expense')>expense</option>
+                    <option value="income" @selected(request('type') === 'income')>Przychód</option>
+                    <option value="expense" @selected(request('type') === 'expense')>Wydatek</option>
                 </select>
             </div>
 
@@ -146,7 +146,9 @@
                     <td>{{ $transaction->transaction_date?->format('Y-m-d') }}</td>
                     <td>{{ number_format((float) $transaction->amount, 2, ',', ' ') }}</td>
                     <td>
-                        <span class="badge {{ $transaction->type === 'income' ? 'bg-success' : 'bg-danger' }}">{{ $transaction->type }}</span>
+                        <span class="badge {{ $transaction->type === 'income' ? 'bg-success' : 'bg-danger' }}">
+                            {{ $transaction->type === 'income' ? 'Przychód' : 'Wydatek' }}
+                        </span>
                     </td>
                     <td>{{ $transaction->category?->name }}</td>
                     <td>{{ $transaction->description ?: '-' }}</td>

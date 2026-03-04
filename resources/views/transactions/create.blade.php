@@ -34,7 +34,7 @@
                                 @error('transaction_date')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @else
-                                    <div class="invalid-feedback">Podaj datê transakcji.</div>
+                                    <div class="invalid-feedback">Podaj datÄ™ transakcji.</div>
                                 @enderror
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                                 @error('amount')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @else
-                                    <div class="invalid-feedback">Podaj poprawn¹ kwotê wiêksz¹ od zera.</div>
+                                    <div class="invalid-feedback">Podaj poprawnÄ… kwotÄ™ wiÄ™kszÄ… od zera.</div>
                                 @enderror
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                                 <span class="input-group-text"><i class="fa-solid fa-scale-balanced"></i></span>
                                 <select id="type" name="type" class="form-select @error('type') is-invalid @enderror" required>
                                     <option value="">Wybierz typ</option>
-                                    <option value="income" @selected(old('type') === 'income')>Przychód</option>
+                                    <option value="income" @selected(old('type') === 'income')>PrzychÃ³d</option>
                                     <option value="expense" @selected(old('type') === 'expense')>Wydatek</option>
                                 </select>
                                 @error('type')
@@ -83,17 +83,17 @@
                             <div class="input-group has-validation">
                                 <span class="input-group-text"><i class="fa-solid fa-tags"></i></span>
                                 <select id="category_id" name="category_id" class="form-select @error('category_id') is-invalid @enderror" required>
-                                    <option value="">Wybierz kategoriê</option>
+                                    <option value="">Wybierz kategoriÄ™</option>
                                     @foreach($categories as $category)
                                         <option value="{{ $category->id }}" data-type="{{ $category->type }}" @selected((string) old('category_id') === (string) $category->id)>
-                                            {{ $category->name }} ({{ $category->type }})
+                                            {{ $category->name }} ({{ $category->type === 'income' ? 'PrzychÃ³d' : 'Wydatek' }})
                                         </option>
                                     @endforeach
                                 </select>
                                 @error('category_id')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @else
-                                    <div class="invalid-feedback">Wybierz kategoriê.</div>
+                                    <div class="invalid-feedback">Wybierz kategoriÄ™.</div>
                                 @enderror
                             </div>
                         </div>
@@ -112,7 +112,7 @@
                                 @error('description')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @else
-                                    <div class="invalid-feedback">Opis nie mo¿e mieæ wiêcej ni¿ 255 znaków.</div>
+                                    <div class="invalid-feedback">Opis nie moÅ¼e mieÄ‡ wiÄ™cej niÅ¼ 255 znakÃ³w.</div>
                                 @enderror
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-primary">
                                 <i class="fa-solid fa-check"></i>
-                                Dodaj transakcjê
+                                Dodaj transakcjÄ™
                             </button>
                             <a href="{{ route('transactions.index') }}" class="btn btn-outline-secondary">Anuluj</a>
                         </div>

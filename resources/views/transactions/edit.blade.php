@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="pl">
 <head>
     <meta charset="utf-8">
@@ -22,51 +22,98 @@
 
                         <div class="mb-3">
                             <label for="transaction_date" class="form-label">Data</label>
-                            <input type="date" id="transaction_date" name="transaction_date" class="form-control @error('transaction_date') is-invalid @enderror" value="{{ old('transaction_date', $transaction->transaction_date?->format('Y-m-d')) }}" required>
-                            @error('transaction_date')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <div class="input-group has-validation">
+                                <span class="input-group-text"><i class="fa-solid fa-calendar"></i></span>
+                                <input
+                                    type="date"
+                                    id="transaction_date"
+                                    name="transaction_date"
+                                    class="form-control @error('transaction_date') is-invalid @enderror"
+                                    value="{{ old('transaction_date', $transaction->transaction_date?->format('Y-m-d')) }}"
+                                    required
+                                >
+                                @error('transaction_date')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @else
+                                    <div class="invalid-feedback">Podaj datę transakcji.</div>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="amount" class="form-label">Kwota</label>
-                            <input type="number" step="0.01" min="0.01" id="amount" name="amount" class="form-control @error('amount') is-invalid @enderror" value="{{ old('amount', $transaction->amount) }}" required>
-                            @error('amount')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <div class="input-group has-validation">
+                                <span class="input-group-text"><i class="fa-solid fa-money-bill-wave"></i></span>
+                                <input
+                                    type="number"
+                                    id="amount"
+                                    name="amount"
+                                    class="form-control @error('amount') is-invalid @enderror"
+                                    value="{{ old('amount', $transaction->amount) }}"
+                                    min="0.01"
+                                    step="0.01"
+                                    required
+                                >
+                                @error('amount')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @else
+                                    <div class="invalid-feedback">Podaj poprawną kwotę większą od zera.</div>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="type" class="form-label">Typ</label>
-                            <select id="type" name="type" class="form-select @error('type') is-invalid @enderror" required>
-                                <option value="income" @selected(old('type', $transaction->type) === 'income')>Przychód</option>
-                                <option value="expense" @selected(old('type', $transaction->type) === 'expense')>Wydatek</option>
-                            </select>
-                            @error('type')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <div class="input-group has-validation">
+                                <span class="input-group-text"><i class="fa-solid fa-scale-balanced"></i></span>
+                                <select id="type" name="type" class="form-select @error('type') is-invalid @enderror" required>
+                                    <option value="income" @selected(old('type', $transaction->type) === 'income')>Przychód</option>
+                                    <option value="expense" @selected(old('type', $transaction->type) === 'expense')>Wydatek</option>
+                                </select>
+                                @error('type')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @else
+                                    <div class="invalid-feedback">Wybierz typ transakcji.</div>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="category_id" class="form-label">Kategoria</label>
-                            <select id="category_id" name="category_id" class="form-select @error('category_id') is-invalid @enderror" required>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}" data-type="{{ $category->type }}" @selected((int) old('category_id', $transaction->category_id) === $category->id)>
-                                        {{ $category->name }} ({{ $category->type }})
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('category_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <div class="input-group has-validation">
+                                <span class="input-group-text"><i class="fa-solid fa-tags"></i></span>
+                                <select id="category_id" name="category_id" class="form-select @error('category_id') is-invalid @enderror" required>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" data-type="{{ $category->type }}" @selected((int) old('category_id', $transaction->category_id) === $category->id)>
+                                            {{ $category->name }} ({{ $category->type === 'income' ? 'Przychód' : 'Wydatek' }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('category_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @else
+                                    <div class="invalid-feedback">Wybierz kategorię.</div>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="mb-4">
                             <label for="description" class="form-label">Opis</label>
-                            <textarea id="description" name="description" class="form-control @error('description') is-invalid @enderror" rows="3" maxlength="255">{{ old('description', $transaction->description) }}</textarea>
-                            @error('description')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <div class="input-group has-validation">
+                                <span class="input-group-text"><i class="fa-solid fa-align-left"></i></span>
+                                <textarea
+                                    id="description"
+                                    name="description"
+                                    class="form-control @error('description') is-invalid @enderror"
+                                    rows="3"
+                                    maxlength="255"
+                                >{{ old('description', $transaction->description) }}</textarea>
+                                @error('description')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @else
+                                    <div class="invalid-feedback">Opis nie może mieć więcej niż 255 znaków.</div>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="d-flex gap-2">
