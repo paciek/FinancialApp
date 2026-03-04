@@ -1,4 +1,4 @@
-import 'bootstrap';
+﻿import 'bootstrap';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -113,4 +113,33 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    const deleteForms = document.querySelectorAll('[data-delete-form]');
+
+    deleteForms.forEach((form) => {
+        form.addEventListener('submit', (event) => {
+            if (!window.confirm('Czy na pewno chcesz usunac ten rekord?')) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
+    });
+
+    const dateFrom = document.getElementById('date_from');
+    const dateTo = document.getElementById('date_to');
+
+    if (dateFrom && dateTo && dateFrom.form === dateTo.form) {
+        dateTo.form.addEventListener('submit', (event) => {
+            const fromValue = dateFrom.value;
+            const toValue = dateTo.value;
+
+            if (fromValue !== '' && toValue !== '' && fromValue > toValue) {
+                event.preventDefault();
+                event.stopPropagation();
+                dateTo.classList.add('is-invalid');
+            } else {
+                dateTo.classList.remove('is-invalid');
+            }
+        });
+    }
 });
