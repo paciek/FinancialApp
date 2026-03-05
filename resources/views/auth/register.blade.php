@@ -7,6 +7,7 @@
     @include('partials.frontend-assets')
 </head>
 <body class="bg-light">
+    @include('partials.app-navbar')
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-12 col-md-9 col-lg-7 col-xl-6">
@@ -155,4 +156,3 @@
     </div>
 </body>
 </html>
-

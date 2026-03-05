@@ -1,3 +1,4 @@
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 @import 'bootstrap/scss/bootstrap';
 
 .register-card {
@@ -26,4 +27,16 @@
     border: 0;
     border-radius: 1rem;
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
+}
+
+[data-bs-theme="dark"] {
+    .bg-light,
+    .bg-white {
+        background-color: var(--bs-body-bg) !important;
+    }
+
+    .register-card,
+    .password-change-card {
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.35);
+    }
 }

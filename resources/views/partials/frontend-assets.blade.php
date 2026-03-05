@@ -36,6 +36,22 @@
     $scripts = array_values(array_unique($scripts));
 @endphp
 
+<script>
+    (() => {
+        try {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = savedTheme === 'light' || savedTheme === 'dark'
+                ? savedTheme
+                : (prefersDark ? 'dark' : 'light');
+
+            document.documentElement.setAttribute('data-bs-theme', theme);
+        } catch (error) {
+            document.documentElement.setAttribute('data-bs-theme', 'light');
+        }
+    })();
+</script>
+
 @if (!empty($manifest))
     @foreach ($styles as $style)
         <link rel="stylesheet" href="{{ asset('frontend/assets/' . $style) }}">
@@ -49,4 +65,3 @@
     <script type="module" src="{{ $viteDevUrl }}/frontend/assets/scss/app.scss"></script>
     <script type="module" src="{{ $viteDevUrl }}/frontend/assets/js/app.js"></script>
 @endif
-
