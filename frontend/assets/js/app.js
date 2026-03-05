@@ -1,5 +1,6 @@
 import 'bootstrap';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import '@fortawesome/fontawesome-free/js/all.js';
+import Chart from 'chart.js/auto';
 
 document.addEventListener('DOMContentLoaded', () => {
     const forms = document.querySelectorAll('[data-validate-form], [data-register-form]');
@@ -113,4 +114,54 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    const expenseChartEl = document.getElementById('expenseChart');
+    if (expenseChartEl) {
+        const labels = JSON.parse(expenseChartEl.dataset.labels ?? '[]');
+        const values = JSON.parse(expenseChartEl.dataset.values ?? '[]');
+
+        new Chart(expenseChartEl, {
+            type: 'doughnut',
+            data: {
+                labels,
+                datasets: [
+                    {
+                        label: 'Wydatki',
+                        data: values,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+            },
+        });
+    }
+
+    const balanceChartEl = document.getElementById('balanceChart');
+    if (balanceChartEl) {
+        const labels = JSON.parse(balanceChartEl.dataset.labels ?? '[]');
+        const values = JSON.parse(balanceChartEl.dataset.values ?? '[]');
+
+        new Chart(balanceChartEl, {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [
+                    {
+                        label: 'Saldo',
+                        data: values,
+                        tension: 0.3,
+                        borderColor: '#0d6efd',
+                        backgroundColor: 'rgba(13, 110, 253, 0.15)',
+                        fill: true,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            },
+        });
+    }
 });
