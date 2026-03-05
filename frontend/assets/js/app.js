@@ -1,5 +1,6 @@
 import 'bootstrap';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import Chart from 'chart.js/auto';
 
 document.addEventListener('DOMContentLoaded', () => {
     const forms = document.querySelectorAll('[data-validate-form], [data-register-form]');
@@ -113,4 +114,63 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    const expenseChartCanvas = document.getElementById('expenseChart');
+    if (expenseChartCanvas) {
+        const labels = JSON.parse(expenseChartCanvas.dataset.labels ?? '[]');
+        const values = JSON.parse(expenseChartCanvas.dataset.values ?? '[]');
+
+        if (Array.isArray(values) && values.length > 0) {
+            new Chart(expenseChartCanvas, {
+                type: 'doughnut',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            data: values,
+                        },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                    },
+                },
+            });
+        }
+    }
+
+    const balanceChartCanvas = document.getElementById('balanceChart');
+    if (balanceChartCanvas) {
+        const labels = JSON.parse(balanceChartCanvas.dataset.labels ?? '[]');
+        const values = JSON.parse(balanceChartCanvas.dataset.values ?? '[]');
+
+        if (Array.isArray(values) && values.length > 0) {
+            new Chart(balanceChartCanvas, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: 'Saldo',
+                            data: values,
+                            tension: 0.3,
+                            fill: false,
+                        },
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                        },
+                    },
+                },
+            });
+        }
+    }
 });
