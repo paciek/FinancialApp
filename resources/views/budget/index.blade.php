@@ -6,7 +6,7 @@
     <title>Budzet miesieczny</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light">
+<body class="bg-light with-right-tabs">
     @include('partials.app-navbar')
 
     <div class="container py-5">

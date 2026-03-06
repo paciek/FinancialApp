@@ -29,6 +29,84 @@
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
 }
 
+.with-right-tabs {
+    @media (min-width: 992px) {
+        padding-left: 14rem;
+    }
+
+    > .container {
+        margin-top: 2.25rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .with-right-tabs > .container {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.app-topbar {
+    margin-top: 0.75rem;
+
+    .app-topbar__inner {
+        min-height: 4rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .with-right-tabs .app-topbar {
+        margin-left: -14rem;
+        width: calc(100% + 14rem);
+    }
+}
+
+.right-nav-tabs {
+    position: fixed;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1030;
+    width: 12rem;
+    max-height: calc(100vh - 6.5rem);
+    overflow-y: auto;
+    padding-right: 0.125rem;
+
+    .nav-link {
+        border: 1px solid var(--bs-border-color);
+        background-color: var(--bs-body-bg);
+        color: var(--bs-body-color);
+        box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.08);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .with-right-tabs {
+        padding-bottom: 6rem;
+    }
+
+    .right-nav-tabs {
+        top: auto;
+        bottom: 0.75rem;
+        right: 0.75rem;
+        left: 0.75rem;
+        transform: none;
+        width: auto;
+
+        .nav {
+            flex-direction: row !important;
+            overflow-x: auto;
+            padding-bottom: 0.25rem;
+        }
+
+        .nav-link {
+            flex: 1 0 auto;
+            text-align: center;
+            white-space: nowrap;
+        }
+    }
+}
+
 [data-bs-theme="dark"] {
     .bg-light,
     .bg-white {
@@ -38,5 +116,9 @@
     .register-card,
     .password-change-card {
         box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.35);
+    }
+
+    .right-nav-tabs .nav-link {
+        box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.35);
     }
 }
