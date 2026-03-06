@@ -7,7 +7,6 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 
 class LoginController extends Controller
@@ -29,9 +28,7 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        $target = Route::has('dashboard') ? route('dashboard') : '/';
-
-        return redirect()->intended($target)->with('success', 'Zalogowano pomyślnie.');
+        return redirect()->route('dashboard')->with('success', 'Zalogowano pomyślnie.');
     }
 
     public function logout(Request $request): RedirectResponse
