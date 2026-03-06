@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\Auth\RegisterController;
 use App\Http\Controllers\Web\CategoryController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\LandingController;
+use App\Http\Controllers\Web\BudgetController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\Profile\PasswordController;
 use App\Http\Controllers\Web\ReportController;
@@ -33,6 +34,9 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
     Route::put('/transactions/{transaction}', [TransactionController::class, 'update'])->name('transactions.update');
     Route::delete('/transactions/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');
+    Route::get('/budget', [BudgetController::class, 'index'])->name('budget.index');
+    Route::post('/budget', [BudgetController::class, 'store'])->name('budget.store');
+    Route::put('/budget', [BudgetController::class, 'update'])->name('budget.update');
     Route::get('/reports/expenses-by-category', [ReportController::class, 'expensesByCategory'])
         ->name('reports.expenses.byCategory');
     Route::get('/reports/balance-over-time', [ReportController::class, 'balanceOverTime'])

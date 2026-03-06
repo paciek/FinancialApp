@@ -17,6 +17,10 @@
                     <i class="fa-solid fa-receipt"></i>
                     Transakcje
                 </a>
+                <a class="btn btn-outline-secondary btn-sm" href="{{ route('budget.index') }}">
+                    <i class="fa-solid fa-wallet"></i>
+                    Budzet
+                </a>
                 <a class="btn btn-outline-secondary btn-sm" href="{{ route('categories.index') }}">
                     <i class="fa-solid fa-layer-group"></i>
                     Kategorie
