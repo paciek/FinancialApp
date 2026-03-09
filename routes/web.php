@@ -4,6 +4,7 @@ use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Auth\RegisterController;
 use App\Http\Controllers\Web\CategoryController;
 use App\Http\Controllers\Web\DashboardController;
+use App\Http\Controllers\Web\ExportController;
 use App\Http\Controllers\Web\LandingController;
 use App\Http\Controllers\Web\BudgetController;
 use App\Http\Controllers\Web\ProfileController;
@@ -26,11 +27,14 @@ Route::middleware('guest')->group(function (): void {
 Route::middleware('auth')->group(function (): void {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::get('/transactions/export/csv', [ExportController::class, 'exportCsv'])->name('transactions.export.csv');
+    Route::get('/transactions/export/json', [ExportController::class, 'exportJson'])->name('transactions.export.json');
     Route::post('/transactions', [TransactionController::class, 'store'])->name('transactions.store');
     Route::put('/transactions/{transaction}', [TransactionController::class, 'update'])->name('transactions.update');
     Route::delete('/transactions/{transaction}', [TransactionController::class, 'destroy'])->name('transactions.destroy');

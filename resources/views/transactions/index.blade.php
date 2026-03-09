@@ -16,6 +16,18 @@
         Transakcje
     </h1>
 
+    <div class="mb-3">
+        <a href="{{ route('transactions.export.csv') }}" class="btn btn-outline-primary btn-sm">
+            <i class="fa-solid fa-file-csv"></i>
+            Eksport CSV
+        </a>
+
+        <a href="{{ route('transactions.export.json') }}" class="btn btn-outline-secondary btn-sm">
+            <i class="fa-solid fa-file-code"></i>
+            Eksport JSON
+        </a>
+    </div>
+
     <div class="card border-0 shadow-sm mb-3">
         <div class="card-header">
             <i class="fa-solid fa-plus"></i>

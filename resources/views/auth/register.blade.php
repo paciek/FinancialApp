@@ -6,7 +6,7 @@
     <title>Rejestracja</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light with-right-tabs">
+<body class="bg-light">
     @include('partials.app-navbar')
     <div class="container py-5">
         <div class="row justify-content-center">

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-white border-bottom shadow-sm app-topbar">
     <div class="container-fluid px-3 px-lg-4 app-topbar__inner d-flex align-items-center justify-content-between gap-2">
-        <a class="navbar-brand fw-semibold m-0" href="{{ auth()->check() ? route('dashboard') : route('register') }}">
+        <a class="navbar-brand fw-semibold m-0" href="{{ auth()->check() ? route('dashboard') : route('landing.index') }}">
             FinancialApp
         </a>
         <div class="d-flex align-items-center gap-2 ms-auto">
@@ -12,15 +12,6 @@
                         Wyloguj
                     </button>
                 </form>
-            @else
-                <a class="btn btn-outline-secondary btn-sm" href="{{ route('login') }}">
-                    <i class="fa-solid fa-right-to-bracket"></i>
-                    Logowanie
-                </a>
-                <a class="btn btn-outline-secondary btn-sm" href="{{ route('register') }}">
-                    <i class="fa-solid fa-user-plus"></i>
-                    Rejestracja
-                </a>
             @endauth
 
             <button
@@ -35,9 +26,9 @@
     </div>
 </nav>
 
-<aside class="right-nav-tabs">
-    <div class="nav nav-pills flex-column gap-2">
-        @auth
+@auth
+    <aside class="right-nav-tabs">
+        <div class="nav nav-pills flex-column gap-2">
             <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
                 <i class="fa-solid fa-gauge me-1"></i>
                 Dashboard
@@ -70,15 +61,6 @@
                 <i class="fa-solid fa-key me-1"></i>
                 Haslo
             </a>
-        @else
-            <a class="nav-link {{ request()->routeIs('login') ? 'active' : '' }}" href="{{ route('login') }}">
-                <i class="fa-solid fa-right-to-bracket me-1"></i>
-                Logowanie
-            </a>
-            <a class="nav-link {{ request()->routeIs('register') ? 'active' : '' }}" href="{{ route('register') }}">
-                <i class="fa-solid fa-user-plus me-1"></i>
-                Rejestracja
-            </a>
-        @endauth
-    </div>
-</aside>
+        </div>
+    </aside>
+@endauth

@@ -79,6 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
             valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
         }
 
+        if (field.hasAttribute('pattern') && value !== '') {
+            const pattern = field.getAttribute('pattern');
+            if (pattern) {
+                valid = new RegExp(pattern).test(value);
+            }
+        }
+
         setInvalidState(field, !valid, 'is-valid');
         return valid;
     };
