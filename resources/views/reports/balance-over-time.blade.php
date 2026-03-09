@@ -11,13 +11,13 @@
 <div class="container py-4">
     @include('partials.alerts')
 
-    <h1 class="h4 mb-3">
+    <h1 class="fs-4 fw-bold mb-4 fade-in">
         <i class="fa-solid fa-chart-line"></i>
         Saldo w czasie
     </h1>
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-body">
+    <div class="card border-0 shadow-sm rounded-3 fade-in fade-in-delay-1">
+        <div class="card-body p-4">
             @if ($labels->isEmpty())
                 <div class="alert alert-secondary mb-0">Brak danych do wykresu.</div>
             @else

@@ -4,7 +4,6 @@ import Chart from 'chart.js/auto';
 
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = themeToggle?.querySelector('i');
 
     const getPreferredTheme = () => {
         const savedTheme = localStorage.getItem('theme');
@@ -18,12 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const applyTheme = (theme) => {
         document.documentElement.setAttribute('data-bs-theme', theme);
 
-        if (!themeIcon) {
-            return;
-        }
-
-        themeIcon.classList.remove('fa-sun', 'fa-moon');
-        themeIcon.classList.add(theme === 'dark' ? 'fa-sun' : 'fa-moon');
     };
 
     applyTheme(document.documentElement.getAttribute('data-bs-theme') ?? getPreferredTheme());

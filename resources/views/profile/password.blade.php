@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Zmiana hasła</title>
+    <title>Zmiana hasla</title>
     @include('partials.frontend-assets')
 </head>
 <body class="bg-light with-right-tabs">
@@ -13,16 +13,16 @@
             <div class="col-12">
                 @include('partials.alerts')
 
-                <div class="card password-change-card">
+                <div class="card password-change-card rounded-3 fade-in">
                     <div class="card-body p-4 p-md-5">
-                        <h1 class="h4 mb-4 text-center">Zmiana hasła</h1>
+                        <h1 class="fs-4 fw-bold mb-4 text-center">Zmiana hasla</h1>
 
                         <form method="POST" action="{{ route('profile.password.update') }}" data-validate-form novalidate>
                             @csrf
                             @method('PUT')
 
                             <div class="mb-3">
-                                <label class="form-label" for="current_password">Aktualne hasło</label>
+                                <label class="form-label" for="current_password">Aktualne haslo</label>
                                 <div class="input-group has-validation">
                                     <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                                     <input
@@ -37,13 +37,13 @@
                                     @error('current_password')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @else
-                                        <div class="invalid-feedback">Podaj aktualne hasło.</div>
+                                        <div class="invalid-feedback">Podaj aktualne haslo.</div>
                                     @enderror
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label" for="password">Nowe hasło</label>
+                                <label class="form-label" for="password">Nowe haslo</label>
                                 <div class="input-group has-validation">
                                     <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                                     <input
@@ -58,7 +58,7 @@
                                     @error('password')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @else
-                                        <div class="invalid-feedback">Hasło musi mieć min. 8 znaków.</div>
+                                        <div class="invalid-feedback">Haslo musi miec min. 8 znakow.</div>
                                     @enderror
                                 </div>
                                 <div class="password-strength mt-2" aria-hidden="true">
@@ -67,7 +67,7 @@
                             </div>
 
                             <div class="mb-4">
-                                <label class="form-label" for="password_confirmation">Potwierdź nowe hasło</label>
+                                <label class="form-label" for="password_confirmation">Potwierdz nowe haslo</label>
                                 <div class="input-group has-validation">
                                     <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                                     <input
@@ -82,12 +82,12 @@
                                     @error('password_confirmation')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @else
-                                        <div class="invalid-feedback">Hasła muszą być identyczne.</div>
+                                        <div class="invalid-feedback">Hasla musza byc identyczne.</div>
                                     @enderror
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-100">Zmień hasło</button>
+                            <button type="submit" class="btn btn-primary w-100">Zmien haslo</button>
                         </form>
                     </div>
                 </div>

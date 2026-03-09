@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-white border-bottom shadow-sm app-topbar">
+<nav class="navbar navbar-expand-lg bg-body shadow-sm app-topbar">
     <div class="container-fluid px-3 px-lg-4 app-topbar__inner d-flex align-items-center justify-content-between gap-2">
         <a class="navbar-brand fw-semibold m-0" href="{{ auth()->check() ? route('dashboard') : route('landing.index') }}">
             FinancialApp

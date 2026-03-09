@@ -8,14 +8,14 @@
 </head>
 <body class="bg-light">
     @include('partials.app-navbar')
-    <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+    <div class="container register-layout py-4 py-lg-5">
+        <div class="row register-layout__row g-4 g-xl-5 align-items-center">
+            <div class="col-12 col-lg-6">
                 @include('partials.alerts')
 
-                <div class="card register-card">
+                <div class="card register-card rounded-3 fade-in">
                     <div class="card-body p-4 p-md-5">
-                        <h1 class="h4 mb-4 text-center">Utwórz konto</h1>
+                        <h1 class="fs-4 fw-bold mb-4 text-center">Utworz konto</h1>
 
                         <form method="POST" action="{{ route('register.store') }}" novalidate data-register-form>
                             @csrf
@@ -37,7 +37,7 @@
                                     @error('login')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @else
-                                        <div class="invalid-feedback">Podaj poprawny login (3-50 znaków).</div>
+                                        <div class="invalid-feedback">Podaj poprawny login (3-50 znakow).</div>
                                     @enderror
                                 </div>
                             </div>
@@ -79,13 +79,13 @@
                                     @error('email_confirmation')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @else
-                                        <div class="invalid-feedback">Adresy email muszą być identyczne.</div>
+                                        <div class="invalid-feedback">Adresy email musza byc identyczne.</div>
                                     @enderror
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label" for="password">Hasło</label>
+                                <label class="form-label" for="password">Haslo</label>
                                 <div class="input-group has-validation">
                                     <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                                     <input
@@ -100,7 +100,7 @@
                                     @error('password')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @else
-                                        <div class="invalid-feedback">Hasło musi mieć min. 8 znaków.</div>
+                                        <div class="invalid-feedback">Haslo musi miec min. 8 znakow.</div>
                                     @enderror
                                 </div>
                                 <div class="password-strength mt-2" aria-hidden="true">
@@ -109,7 +109,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label" for="password_confirmation">Potwierdzenie hasła</label>
+                                <label class="form-label" for="password_confirmation">Potwierdzenie hasla</label>
                                 <div class="input-group has-validation">
                                     <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
                                     <input
@@ -124,7 +124,7 @@
                                     @error('password_confirmation')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @else
-                                        <div class="invalid-feedback">Hasła muszą być identyczne.</div>
+                                        <div class="invalid-feedback">Hasla musza byc identyczne.</div>
                                     @enderror
                                 </div>
                             </div>
@@ -139,7 +139,7 @@
                                     {{ old('terms') ? 'checked' : '' }}
                                     required
                                 >
-                                <label class="form-check-label" for="terms">Akceptuję regulamin</label>
+                                <label class="form-check-label" for="terms">Akceptuje regulamin</label>
                                 @error('terms')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @else
@@ -147,10 +147,33 @@
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-100">Załóż konto</button>
+                            <button type="submit" class="btn btn-primary w-100">Zaloz konto</button>
                         </form>
                     </div>
                 </div>
+            </div>
+
+            <div class="col-lg-6 d-none d-lg-flex">
+                <aside class="register-side-panel fade-in fade-in-delay-1 w-100">
+                    <div>
+                        <p class="register-side-panel__eyebrow mb-3">DOLACZ DO NAS</p>
+                        <h2 class="fs-2 fw-bold mb-3">Zacznij w kilka minut</h2>
+                        <p class="text-secondary mb-4">
+                            Dolacz do spolecznosci i odkryj nowe mozliwosci finansowe.
+                        </p>
+                    </div>
+
+                    <div class="register-illustration mt-2" aria-hidden="true">
+                        <div class="register-illustration__line"></div>
+                        <div class="register-illustration__bars">
+                            <span class="bar bar-1"></span>
+                            <span class="bar bar-2"></span>
+                            <span class="bar bar-3"></span>
+                            <span class="bar bar-4"></span>
+                            <span class="bar bar-5"></span>
+                        </div>
+                    </div>
+                </aside>
             </div>
         </div>
     </div>

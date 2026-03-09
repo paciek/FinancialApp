@@ -1,10 +1,118 @@
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 @import 'bootstrap/scss/bootstrap';
 
+:root {
+    --app-bg-1: #f5f7fb;
+    --app-bg-2: #eef2f8;
+    --app-surface: #ffffff;
+    --app-text: #0f172a;
+    --app-muted: #475569;
+    --app-ring: #dbe4f0;
+    --app-shadow-sm: 0 8px 20px rgba(15, 23, 42, 0.08);
+    --app-shadow-lg: 0 16px 36px rgba(15, 23, 42, 0.14);
+    --app-radius: 1rem;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    color: var(--app-text);
+    font-family: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(180deg, var(--app-bg-1), var(--app-bg-2));
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    letter-spacing: -0.015em;
+}
+
 .register-card {
     border: 0;
-    border-radius: 1rem;
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
+    border-radius: 1.1rem;
+    box-shadow: var(--app-shadow-sm);
+}
+
+.register-layout {
+    min-height: calc(100vh - 4rem);
+    display: flex;
+    align-items: center;
+}
+
+.register-layout__row {
+    max-width: 1180px;
+    margin-inline: auto;
+    min-height: auto;
+}
+
+.register-side-panel {
+    border-left: 1px solid var(--app-ring);
+    padding: 2rem 1.5rem 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.register-side-panel__eyebrow {
+    color: #1d4ed8;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+}
+
+.register-illustration {
+    width: min(22rem, 100%);
+}
+
+.register-illustration__line {
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, #d7e3ff, transparent);
+    margin-bottom: 1rem;
+}
+
+.register-illustration__bars {
+    display: flex;
+    align-items: end;
+    gap: 1rem;
+}
+
+.register-illustration__bars .bar {
+    display: block;
+    width: 2.5rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.register-illustration__bars .bar-1 {
+    height: 5rem;
+    background: #d1d5db;
+}
+
+.register-illustration__bars .bar-2 {
+    height: 8rem;
+    background: #1d4ed8;
+}
+
+.register-illustration__bars .bar-3 {
+    height: 3.2rem;
+    background: #111827;
+}
+
+.register-illustration__bars .bar-4 {
+    height: 6.2rem;
+    background: #d1d5db;
+}
+
+.register-illustration__bars .bar-5 {
+    height: 4.5rem;
+    background: #7694ea;
 }
 
 .password-strength {
@@ -25,8 +133,86 @@
     max-width: 36rem;
     margin: 0 auto;
     border: 0;
-    border-radius: 1rem;
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
+    border-radius: 1.1rem;
+    box-shadow: var(--app-shadow-sm);
+}
+
+.card {
+    border: 0;
+    border-radius: var(--app-radius);
+    box-shadow: var(--app-shadow-sm);
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--app-shadow-lg);
+}
+
+.card-header {
+    border-bottom: 1px solid var(--app-ring);
+    background: color-mix(in oklab, var(--app-surface) 90%, #e8eef8);
+    font-weight: 600;
+}
+
+.btn {
+    border-radius: 0.75rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:focus-visible,
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+.form-control,
+.form-select,
+.input-group-text {
+    border-radius: 0.75rem;
+    border-color: var(--app-ring);
+}
+
+.input-group > .input-group-text {
+    background-color: #f8fafd;
+}
+
+.table {
+    border-color: var(--app-ring);
+}
+
+.table > :not(caption) > * > * {
+    padding: 0.85rem 0.75rem;
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInUp 0.55s ease forwards;
+}
+
+.fade-in-delay-1 {
+    animation-delay: 0.08s;
+}
+
+.fade-in-delay-2 {
+    animation-delay: 0.16s;
+}
+
+.fade-in-delay-3 {
+    animation-delay: 0.24s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .with-right-tabs {
@@ -47,7 +233,12 @@
 }
 
 .app-topbar {
-    margin-top: 0.75rem;
+    position: sticky;
+    top: 0;
+    z-index: 1040;
+    margin-top: 0;
+    border-bottom: 1px solid var(--app-ring);
+    backdrop-filter: saturate(180%) blur(8px);
 
     .app-topbar__inner {
         min-height: 4rem;
@@ -56,8 +247,8 @@
 
 @media (min-width: 992px) {
     .with-right-tabs .app-topbar {
-        margin-left: -14rem;
-        width: calc(100% + 14rem);
+        margin-left: calc(-14rem - 1rem);
+        width: calc(100% + 14rem + 1rem);
     }
 }
 
@@ -73,14 +264,30 @@
     padding-right: 0.125rem;
 
     .nav-link {
+        border-radius: 0.75rem;
         border: 1px solid var(--bs-border-color);
         background-color: var(--bs-body-bg);
         color: var(--bs-body-color);
         box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .nav-link:hover {
+        transform: translateX(2px);
+        box-shadow: 0 0.7rem 1.2rem rgba(0, 0, 0, 0.12);
+    }
+
+    .nav-link.active {
+        box-shadow: 0 0.7rem 1.2rem rgba(13, 110, 253, 0.25);
     }
 }
 
 @media (max-width: 991.98px) {
+    .register-layout {
+        min-height: auto;
+        display: block;
+    }
+
     .with-right-tabs {
         padding-bottom: 6rem;
     }
@@ -108,6 +315,11 @@
 }
 
 [data-bs-theme="dark"] {
+    body {
+        color: #e5e7eb;
+        background: linear-gradient(180deg, #0f172a, #111827);
+    }
+
     .bg-light,
     .bg-white {
         background-color: var(--bs-body-bg) !important;
@@ -118,7 +330,28 @@
         box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.35);
     }
 
+    .register-side-panel {
+        border-left-color: rgba(148, 163, 184, 0.35);
+    }
+
+    .register-illustration__line {
+        background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.55), transparent);
+    }
+
+    .register-illustration__bars .bar-1,
+    .register-illustration__bars .bar-4 {
+        background: #4b5563;
+    }
+
+    .register-illustration__bars .bar-3 {
+        background: #e5e7eb;
+    }
+
     .right-nav-tabs .nav-link {
         box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.35);
+    }
+
+    .card:hover {
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.5);
     }
 }

@@ -11,9 +11,9 @@
     <div class="container py-4">
         @include('partials.alerts')
 
-        <div class="card border-0 shadow-sm">
+        <div class="card border-0 shadow-sm rounded-3 fade-in">
             <div class="card-body p-4">
-                <h1 class="h4 mb-3">
+                <h1 class="fs-4 fw-bold mb-4">
                     <i class="fa-solid fa-user"></i>
                     Profil
                 </h1>

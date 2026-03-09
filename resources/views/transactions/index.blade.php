@@ -11,12 +11,12 @@
 <div class="container py-4">
     @include('partials.alerts')
 
-    <h1 class="h4 mb-3">
+    <h1 class="fs-4 fw-bold mb-4 fade-in">
         <i class="fa-solid fa-receipt"></i>
         Transakcje
     </h1>
 
-    <div class="mb-3">
+    <div class="mb-4 fade-in fade-in-delay-1">
         <a href="{{ route('transactions.export.csv') }}" class="btn btn-outline-primary btn-sm">
             <i class="fa-solid fa-file-csv"></i>
             Eksport CSV
@@ -28,7 +28,7 @@
         </a>
     </div>
 
-    <div class="card border-0 shadow-sm mb-3">
+    <div class="card border-0 shadow-sm rounded-3 mb-4 fade-in fade-in-delay-1">
         <div class="card-header">
             <i class="fa-solid fa-plus"></i>
             Nowa transakcja
@@ -69,7 +69,7 @@
         </div>
     </div>
 
-    <div class="card border-0 shadow-sm mb-4">
+    <div class="card border-0 shadow-sm rounded-3 mb-4 fade-in fade-in-delay-2">
         <div class="card-header">
             <i class="fa-solid fa-filter"></i>
             Filtry
@@ -109,9 +109,9 @@
         </div>
     </div>
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-body">
-            <h2 class="h5 mb-3">Lista transakcji</h2>
+    <div class="card border-0 shadow-sm rounded-3 fade-in fade-in-delay-3">
+        <div class="card-body p-4">
+            <h2 class="fs-5 fw-bold mb-3">Lista transakcji</h2>
             @if ($transactions->isEmpty())
                 <div class="alert alert-secondary mb-0">Brak transakcji.</div>
             @else

@@ -11,13 +11,13 @@
 <div class="container py-4">
     @include('partials.alerts')
 
-    <h1 class="h4 mb-3">
+    <h1 class="fs-4 fw-bold mb-4 fade-in">
         <i class="fa-solid fa-layer-group"></i>
         Kategorie
     </h1>
 
-    <div class="card border-0 shadow-sm mb-3">
-        <div class="card-body">
+    <div class="card border-0 shadow-sm rounded-3 mb-4 fade-in fade-in-delay-1">
+        <div class="card-body p-4">
             <form method="POST" action="{{ route('categories.store') }}" class="row g-2">
                 @csrf
                 <div class="col-md-5">
@@ -36,8 +36,8 @@
         </div>
     </div>
 
-    <div class="card border-0 shadow-sm">
-        <div class="card-body">
+    <div class="card border-0 shadow-sm rounded-3 fade-in fade-in-delay-2">
+        <div class="card-body p-4">
             @if ($categories->isEmpty())
                 <div class="alert alert-secondary mb-0">Brak kategorii.</div>
             @else
