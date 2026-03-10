@@ -49,4 +49,3 @@
     <script type="module" src="{{ $viteDevUrl }}/frontend/assets/scss/app.scss"></script>
     <script type="module" src="{{ $viteDevUrl }}/frontend/assets/js/app.js"></script>
 @endif
-

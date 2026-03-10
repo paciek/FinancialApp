@@ -1,20 +1,17 @@
 # F-02 Logowanie
 
-## Cel funkcjonalnosci
+## 1. Cel funkcjonalności
+Umożliwienie użytkownikowi zalogowania się do systemu z walidacją danych i bez ujawniania, czy email istnieje.
 
-Umozliwienie uzytkownikowi zalogowania sie do systemu z walidacja danych i bez ujawniania, czy email istnieje.
-
-## Zakres wdrozenia
-
-- Formularz logowania dostepny pod `/login`.
+## 2. Zakres wdrożenia
+- Formularz logowania dostępny pod `/login`.
 - Walidacja po stronie frontend (HTML5 + JavaScript) i backend (Laravel `FormRequest`).
-- Proba logowania przez `Auth::attempt`.
+- Logowanie przez `Auth::attempt`.
 - Regeneracja sesji po poprawnym logowaniu.
-- Przekierowanie po sukcesie na `route('dashboard')` (jesli istnieje) lub `/`.
+- Przekierowanie po sukcesie na `route('dashboard')` (jeśli istnieje) lub `/`.
 - Komunikaty flash dla sukcesu i wylogowania.
 
-## Struktura plikow
-
+## 3. Struktura plików
 - `frontend/assets/js/app.js`
 - `frontend/assets/scss/app.scss`
 - `resources/views/auth/login.blade.php`
@@ -25,14 +22,12 @@ Umozliwienie uzytkownikowi zalogowania sie do systemu z walidacja danych i bez u
 - `routes/web.php`
 - `tests/Feature/Auth/LoginTest.php`
 
-## Wymagania srodowiskowe
-
+## 4. Wymagania środowiskowe
 - PHP i Composer zgodne z wymaganiami projektu.
 - Node.js oraz npm.
-- Skonfigurowane polaczenie do bazy danych.
+- Skonfigurowane połączenie do bazy danych.
 
-## Instrukcja uruchomienia
-
+## 5. Instrukcja uruchomienia
 1. `composer install`
 2. `cp .env.example .env`
 3. `php artisan key:generate`
@@ -41,35 +36,30 @@ Umozliwienie uzytkownikowi zalogowania sie do systemu z walidacja danych i bez u
 6. `npm run build`
 7. `php artisan serve`
 
-## Opis walidacji
-
+## 6. Opis walidacji
 ### Backend (LoginRequest)
-
 - `email`: `required|email`
 - `password`: `required|min:8`
 
 ### Frontend
-
 - Atrybuty HTML5: `required`, `type=email`, `minlength`, `maxlength`.
 - Klasy walidacyjne Bootstrap (`is-invalid`) ustawiane dynamicznie w JavaScript.
 
-## Scenariusz testowy
-
-1. Uzytkownik przechodzi na `/login`.
+## 7. Scenariusz testowy
+1. Użytkownik przechodzi na `/login`.
 2. Podaje poprawny `email` i `password`.
-3. System wykonuje logowanie i regeneruje sesje.
-4. Uzytkownik jest przekierowany na `route('dashboard')` lub `/`.
-5. Po wylogowaniu system uniewaznia sesje i wyswietla komunikat sukcesu.
+3. System wykonuje logowanie i regeneruje sesję.
+4. Użytkownik jest przekierowany na `route('dashboard')` lub `/`.
+5. Po wylogowaniu system unieważnia sesję i wyświetla komunikat sukcesu.
 
-## Definition of Done
-
-- Formularz logowania dziala.
-- Walidacja backend dziala.
-- Inline bledy w formularzu dzialaja.
-- Bledne logowanie zwraca komunikat ogolny.
+## 8. Definition of Done
+- Formularz logowania działa.
+- Walidacja backend działa.
+- Inline błędy w formularzu działają.
+- Błędne logowanie zwraca komunikat ogólny.
 - Sesja jest regenerowana po logowaniu.
-- Wylogowanie dziala.
-- Testy przechodza.
-- Bootstrap i FontAwesome sa dostepne przez Vite.
+- Wylogowanie działa.
+- Testy przechodzą.
+- Bootstrap i FontAwesome są dostępne przez Vite.
 - Dokumentacja istnieje.
-- Kod jest zgodny ze struktura Laravel.
+- Kod jest zgodny ze strukturą Laravel.

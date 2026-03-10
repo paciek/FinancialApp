@@ -2,17 +2,7 @@ import 'bootstrap';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('[data-register-form]');
-
-    if (!form) {
-        return;
-    }
-
-    const email = form.querySelector('#email');
-    const emailConfirmation = form.querySelector('#email_confirmation');
-    const password = form.querySelector('#password');
-    const passwordConfirmation = form.querySelector('#password_confirmation');
-    const strengthBar = form.querySelector('[data-password-strength-bar]');
+    const forms = document.querySelectorAll('[data-validate-form], [data-register-form]');
 
     const setInvalidState = (field, invalid) => {
         if (!field) {
@@ -20,31 +10,67 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         field.classList.toggle('is-invalid', invalid);
-        if (!invalid && field.value !== '') {
-            field.classList.add('is-valid');
-        } else {
-            field.classList.remove('is-valid');
+    };
+
+    const validateField = (field) => {
+        if (!field) {
+            return true;
         }
-    };
 
-    const validateEmails = () => {
-        const valid = email.value !== '' && emailConfirmation.value !== '' && email.value === emailConfirmation.value;
-        setInvalidState(emailConfirmation, !valid);
+        const value = (field.value ?? '').trim();
+        let valid = true;
+
+        if (field.hasAttribute('required') && value === '') {
+            valid = false;
+        }
+
+        const minLengthAttr = field.getAttribute('minlength');
+        if (minLengthAttr) {
+            const minLength = Number.parseInt(minLengthAttr, 10);
+            if (value !== '' && value.length < minLength) {
+                valid = false;
+            }
+        }
+
+        const maxLengthAttr = field.getAttribute('maxlength');
+        if (maxLengthAttr) {
+            const maxLength = Number.parseInt(maxLengthAttr, 10);
+            if (value.length > maxLength) {
+                valid = false;
+            }
+        }
+
+        if (field.type === 'email' && value !== '') {
+            valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        }
+
+        if (field.name === 'password' && value !== '' && value.length < 8) {
+            valid = false;
+        }
+
+        setInvalidState(field, !valid);
         return valid;
     };
 
-    const validatePasswords = () => {
-        const valid = password.value !== '' && passwordConfirmation.value !== '' && password.value === passwordConfirmation.value;
-        setInvalidState(passwordConfirmation, !valid);
+    const validateMatch = (primaryField, confirmField) => {
+        if (!primaryField || !confirmField) {
+            return true;
+        }
+
+        const valid = primaryField.value !== ''
+            && confirmField.value !== ''
+            && primaryField.value === confirmField.value;
+
+        setInvalidState(confirmField, !valid);
         return valid;
     };
 
-    const updateStrength = () => {
-        if (!strengthBar) {
+    const updateStrength = (passwordField, strengthBar) => {
+        if (!passwordField || !strengthBar) {
             return;
         }
 
-        const value = password.value;
+        const value = passwordField.value ?? '';
         let score = 0;
 
         if (value.length >= 8) score += 1;
@@ -60,22 +86,50 @@ document.addEventListener('DOMContentLoaded', () => {
         strengthBar.classList.add(classes[score]);
     };
 
-    emailConfirmation.addEventListener('input', validateEmails);
-    email.addEventListener('input', validateEmails);
-    passwordConfirmation.addEventListener('input', validatePasswords);
-    password.addEventListener('input', () => {
-        validatePasswords();
-        updateStrength();
-    });
+    forms.forEach((form) => {
+        const fields = form.querySelectorAll('input, select, textarea');
+        const email = form.querySelector('input[name="email"]');
+        const emailConfirmation = form.querySelector('input[name="email_confirmation"]');
+        const password = form.querySelector('input[name="password"]');
+        const passwordConfirmation = form.querySelector('input[name="password_confirmation"]');
+        const strengthBar = form.querySelector('[data-password-strength-bar]');
 
-    form.addEventListener('submit', (event) => {
-        const emailsValid = validateEmails();
-        const passwordsValid = validatePasswords();
+        fields.forEach((field) => {
+            field.addEventListener('input', () => {
+                validateField(field);
+                validateMatch(email, emailConfirmation);
+                validateMatch(password, passwordConfirmation);
+                updateStrength(password, strengthBar);
+            });
 
-        if (!emailsValid || !passwordsValid || !form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-            form.classList.add('was-validated');
-        }
+            field.addEventListener('blur', () => {
+                validateField(field);
+                validateMatch(email, emailConfirmation);
+                validateMatch(password, passwordConfirmation);
+            });
+        });
+
+        form.addEventListener('submit', (event) => {
+            let valid = true;
+
+            fields.forEach((field) => {
+                if (!validateField(field)) {
+                    valid = false;
+                }
+            });
+
+            if (!validateMatch(email, emailConfirmation)) {
+                valid = false;
+            }
+
+            if (!validateMatch(password, passwordConfirmation)) {
+                valid = false;
+            }
+
+            if (!valid) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
     });
 });

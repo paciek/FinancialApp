@@ -39,7 +39,7 @@ class LoginTest extends TestCase
 
         $response = $this->from(route('login'))->post(route('login'), [
             'email' => 'jan@example.com',
-            'password' => 'ZleHaslo123!'
+            'password' => 'ZleHaslo123!',
         ]);
 
         $response
@@ -55,7 +55,7 @@ class LoginTest extends TestCase
     {
         $response = $this->from(route('login'))->post(route('login'), [
             'email' => 'brak@example.com',
-            'password' => 'Haslo123!'
+            'password' => 'Haslo123!',
         ]);
 
         $response
