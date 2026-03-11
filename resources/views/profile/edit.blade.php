@@ -91,6 +91,11 @@
 
                             <button type="submit" class="btn btn-primary w-100">Zapisz zmiany</button>
                         </form>
+                        <div class="mt-3 text-center">
+                            <a href="{{ route('profile.password.edit') }}" class="btn btn-outline-secondary w-100">
+                                Zmien haslo
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
