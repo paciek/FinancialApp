@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pl">
 <head>
     <meta charset="utf-8">
@@ -11,7 +11,7 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-8 col-lg-6">
                 @include('partials.alerts')
-                <div class="card register-card">
+                <div class="card login-card">
                     <div class="card-body p-4">
                         <h1 class="h4 text-center mb-4">Logowanie</h1>
                         <form method="POST" action="{{ route('login') }}" data-validate-form novalidate>
@@ -68,3 +68,4 @@
     </div>
 </body>
 </html>
+

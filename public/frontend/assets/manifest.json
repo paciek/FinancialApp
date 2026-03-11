@@ -1,11 +1,11 @@
 {
   "frontend/assets/js/app.js": {
-    "file": "js/app-pqiSKUgo.js",
+    "file": "js/app-ZaDuarmu.js",
     "name": "app",
     "src": "frontend/assets/js/app.js",
     "isEntry": true,
     "css": [
-      "css/app-OQuk6CE5.css"
+      "css/app-vQwDYDJZ.css"
     ],
     "assets": [
       "assets/fa-brands-400-BP5tdqmh.woff2",
@@ -14,7 +14,7 @@
     ]
   },
   "frontend/assets/scss/app.scss": {
-    "file": "css/app-C13yk6xp.css",
+    "file": "css/app-cFc__Q2i.css",
     "src": "frontend/assets/scss/app.scss",
     "isEntry": true,
     "name": "style",
