@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Nowa kategoria</title>
+    <title>Edycja kategorii</title>
     @include('partials.frontend-assets')
 </head>
 <body class="bg-light">
@@ -13,9 +13,10 @@
                 @include('partials.alerts')
                 <div class="card form-card">
                     <div class="card-body p-4 p-md-5">
-                        <h1 class="h4 text-center mb-4">Nowa kategoria</h1>
-                        <form method="POST" action="{{ route('categories.store') }}" data-validate-form novalidate>
+                        <h1 class="h4 text-center mb-4">Edycja kategorii</h1>
+                        <form method="POST" action="{{ route('categories.update', $category) }}" data-validate-form novalidate>
                             @csrf
+                            @method('PUT')
 
                             <div class="mb-3">
                                 <label class="form-label" for="name">Nazwa</label>
@@ -26,7 +27,7 @@
                                         id="name"
                                         name="name"
                                         class="form-control @error('name') is-invalid @enderror"
-                                        value="{{ old('name') }}"
+                                        value="{{ old('name', $category->name) }}"
                                         required
                                         maxlength="100"
                                     >
@@ -49,7 +50,7 @@
                                             id="type-income"
                                             value="income"
                                             required
-                                            @checked(old('type') === 'income')
+                                            @checked(old('type', $category->type) === 'income')
                                         >
                                         <label class="form-check-label" for="type-income">
                                             Przychod <span class="badge category-badge category-badge--income">Przychod</span>
@@ -63,7 +64,7 @@
                                             id="type-expense"
                                             value="expense"
                                             required
-                                            @checked(old('type') === 'expense')
+                                            @checked(old('type', $category->type) === 'expense')
                                         >
                                         <label class="form-check-label" for="type-expense">
                                             Wydatek <span class="badge category-badge category-badge--expense">Wydatek</span>
@@ -77,7 +78,7 @@
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-primary w-100">Zapisz</button>
+                            <button type="submit" class="btn btn-primary w-100">Zapisz zmiany</button>
                         </form>
                     </div>
                 </div>

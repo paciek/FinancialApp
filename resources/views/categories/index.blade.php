@@ -23,15 +23,47 @@
                         @if ($categories->isEmpty())
                             <p class="text-muted mb-0">Brak kategorii. Dodaj pierwsza.</p>
                         @else
-                            <div class="list-group">
-                                @foreach ($categories as $category)
-                                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span>{{ $category->name }}</span>
-                                        <span class="badge category-badge {{ $category->type === 'income' ? 'category-badge--income' : 'category-badge--expense' }}">
-                                            {{ $category->type }}
-                                        </span>
-                                    </div>
-                                @endforeach
+                            <div class="table-responsive">
+                                <table class="table align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th>Nazwa</th>
+                                            <th>Typ</th>
+                                            <th class="text-end">Akcje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($categories as $category)
+                                            @php
+                                                $typeLabel = $category->type === 'income' ? 'Przychod' : 'Wydatek';
+                                            @endphp
+                                            <tr>
+                                                <td>{{ $category->name }}</td>
+                                                <td>
+                                                    <span class="badge category-badge {{ $category->type === 'income' ? 'category-badge--income' : 'category-badge--expense' }}">
+                                                        {{ $typeLabel }}
+                                                    </span>
+                                                </td>
+                                                <td class="text-end">
+                                                    <div class="d-inline-flex gap-2">
+                                                        <a href="{{ route('categories.edit', $category) }}" class="btn btn-outline-primary btn-sm">
+                                                            <i class="fa-solid fa-pen"></i>
+                                                            Edytuj
+                                                        </a>
+                                                        <form method="POST" action="{{ route('categories.destroy', $category) }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-outline-danger btn-sm" data-confirm="delete">
+                                                                <i class="fa-solid fa-trash"></i>
+                                                                Usun
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         @endif
                     </div>

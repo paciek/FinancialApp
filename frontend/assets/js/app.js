@@ -113,4 +113,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    document.querySelectorAll('[data-confirm="delete"]').forEach((button) => {
+        button.addEventListener('click', (event) => {
+            if (!confirm('Czy na pewno chcesz usunac ten element?')) {
+                event.preventDefault();
+            }
+        });
+    });
 });

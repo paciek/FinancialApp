@@ -13,15 +13,20 @@ Umozliwic zalogowanemu uzytkownikowi tworzenie wlasnych kategorii finansowych z 
 ## 3. Struktura plikow
 - app/Http/Controllers/Web/CategoryController.php
 - app/Http/Requests/StoreCategoryRequest.php
+- app/Http/Requests/UpdateCategoryRequest.php
 - app/Models/Category.php
 - app/Models/User.php
+- app/Policies/CategoryPolicy.php
+- app/Providers/AuthServiceProvider.php
 - database/migrations/2026_03_11_130000_create_categories_table.php
 - resources/views/categories/create.blade.php
+- resources/views/categories/edit.blade.php
 - resources/views/categories/index.blade.php
 - frontend/assets/js/app.js
 - frontend/assets/scss/app.scss
 - routes/web.php
 - tests/Feature/Category/CreateCategoryTest.php
+- tests/Feature/Category/CategoryCrudTest.php
 - docs/F-05-Tworzenie-Kategorii.md
 
 ## 4. Struktura tabeli categories
@@ -59,7 +64,44 @@ Umozliwic zalogowanemu uzytkownikowi tworzenie wlasnych kategorii finansowych z 
 5. Nazwa jest unikalna w obrebie uzytkownika.
 6. Dwoch roznych uzytkownikow moze miec te sama nazwe.
 
-## 9. Definition of Done
+## 9. F-06 — Edycja i usuwanie
+
+### Policy
+- Update i delete dozwolone tylko dla wlasciciela kategorii.
+- Policy: `CategoryPolicy` z warunkiem `user_id`.
+
+### Update flow
+1. Autoryzacja przez policy.
+2. Walidacja w `UpdateCategoryRequest` z unikalnoscia w obrebie uzytkownika.
+3. Aktualizacja rekordu i przekierowanie na liste z komunikatem.
+
+### Delete flow
+1. Autoryzacja przez policy.
+2. Usuniecie rekordu.
+3. Przekierowanie na liste z komunikatem.
+
+### Test cases
+- Uzytkownik moze edytowac swoja kategorie.
+- Uzytkownik nie moze edytowac cudzej kategorii.
+- Uzytkownik moze usunac swoja kategorie.
+- Uzytkownik nie moze usunac cudzej kategorii.
+- Walidacja update dziala.
+- Unikalnosc nazwy per uzytkownik przy update.
+
+### Definition of Done (F-06)
+- Lista kategorii dziala.
+- Edycja dziala.
+- Usuwanie dziala.
+- Policy zabezpiecza rekordy.
+- Walidacja update dziala.
+- Unique per user dziala.
+- Confirm przy usuwaniu dziala.
+- Testy przechodza.
+- Bootstrap + FA dzialaja.
+- Dokumentacja zaktualizowana.
+- Kod zgodny ze struktura Laravel.
+
+## 10. Definition of Done
 - Formularz dziala.
 - Middleware auth dziala.
 - Walidacja backend dziala.

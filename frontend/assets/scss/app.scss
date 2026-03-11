@@ -32,6 +32,34 @@
     margin-bottom: 1.5rem;
 }
 
+.form-card {
+    width: 100%;
+    max-width: 42rem;
+    margin: 0 auto;
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
+}
+
+.category-badge {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    border: 1px solid transparent;
+}
+
+.category-badge--income {
+    background: #198754;
+    color: #fff;
+    border-color: #157347;
+}
+
+.category-badge--expense {
+    background: #dc3545;
+    color: #fff;
+    border-color: #bb2d3b;
+}
+
 .password-strength {
     height: 0.5rem;
     background: #e9ecef;
