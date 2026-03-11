@@ -15,7 +15,7 @@
                     <div class="card-body p-4 p-md-5">
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
                             <h1 class="h4 m-0">Lista transakcji</h1>
-                            <a href="#" class="btn btn-primary">
+                            <a href="{{ route('transactions.create') }}" class="btn btn-primary">
                                 <i class="fa-solid fa-plus"></i>
                                 Nowa transakcja
                             </a>

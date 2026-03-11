@@ -140,4 +140,62 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    const transactionForm = document.querySelector('[data-transaction-form]');
+    if (transactionForm) {
+        const typeOptions = transactionForm.querySelectorAll('[data-type-option]');
+        const categorySelect = transactionForm.querySelector('[data-category-select]');
+        const amountInput = transactionForm.querySelector('[data-amount-input]');
+
+        const updateAmountStyle = (type) => {
+            if (!amountInput) {
+                return;
+            }
+
+            amountInput.classList.remove('text-success', 'text-danger');
+            if (type === 'income') {
+                amountInput.classList.add('text-success');
+            }
+            if (type === 'expense') {
+                amountInput.classList.add('text-danger');
+            }
+        };
+
+        const updateCategoryOptions = (type) => {
+            if (!categorySelect) {
+                return;
+            }
+
+            const options = categorySelect.querySelectorAll('option[data-type]');
+            options.forEach((option) => {
+                const matches = option.getAttribute('data-type') === type || !type;
+                option.hidden = !matches;
+                option.disabled = !matches;
+            });
+
+            if (categorySelect.value && categorySelect.selectedOptions.length > 0) {
+                const selectedOption = categorySelect.selectedOptions[0];
+                if (selectedOption.disabled) {
+                    categorySelect.value = '';
+                }
+            }
+        };
+
+        const getSelectedType = () => {
+            const selected = Array.from(typeOptions).find((option) => option.checked);
+            return selected ? selected.value : '';
+        };
+
+        typeOptions.forEach((option) => {
+            option.addEventListener('change', () => {
+                const type = getSelectedType();
+                updateCategoryOptions(type);
+                updateAmountStyle(type);
+            });
+        });
+
+        const initialType = getSelectedType();
+        updateCategoryOptions(initialType);
+        updateAmountStyle(initialType);
+    }
 });

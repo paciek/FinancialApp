@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTransactionRequest;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class TransactionController extends Controller
 {
@@ -33,5 +35,31 @@ class TransactionController extends Controller
         $transactions = $query->paginate(15)->withQueryString();
 
         return view('transactions.index', compact('transactions'));
+    }
+
+    public function create(): View
+    {
+        $categories = auth()->user()
+            ->categories()
+            ->orderBy('name')
+            ->get();
+
+        return view('transactions.create', compact('categories'));
+    }
+
+    public function store(StoreTransactionRequest $request): RedirectResponse
+    {
+        Transaction::create([
+            'user_id' => auth()->id(),
+            'category_id' => $request->integer('category_id'),
+            'amount' => $request->input('amount'),
+            'type' => $request->string('type')->toString(),
+            'description' => $request->string('description')->toString() ?: null,
+            'transaction_date' => $request->string('transaction_date')->toString(),
+        ]);
+
+        return redirect()
+            ->route('transactions.index')
+            ->with('success', 'Transakcja została dodana.');
     }
 }
