@@ -15,6 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    const validateRadioGroup = (field) => {
+        const group = document.querySelectorAll(`input[type="radio"][name="${field.name}"]`);
+        const checked = Array.from(group).some((radio) => radio.checked);
+
+        group.forEach((radio) => {
+            setInvalidState(radio, !checked, 'is-valid');
+        });
+
+        return checked;
+    };
+
     const validateField = (field) => {
         if (!field) {
             return true;
@@ -25,6 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (field.hasAttribute('required') && value === '') {
             valid = false;
+        }
+
+        if (field.tagName === 'SELECT' && field.hasAttribute('required') && value === '') {
+            valid = false;
+        }
+
+        if (field.type === 'radio' && field.hasAttribute('required')) {
+            return validateRadioGroup(field);
         }
 
         if (field.hasAttribute('minlength')) {

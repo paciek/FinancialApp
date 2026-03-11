@@ -1,0 +1,66 @@
+# F-07 — Lista Transakcji
+
+## 1. Cel funkcjonalnosci
+Wyswietlenie tabeli wszystkich operacji finansowych zalogowanego uzytkownika z paginacja i filtrowaniem.
+
+## 2. Struktura tabeli transactions
+- id
+- user_id (foreign key -> users, cascadeOnDelete)
+- category_id (foreign key -> categories, restrictOnDelete)
+- amount (decimal 12,2)
+- type (enum: income, expense)
+- description (string, nullable)
+- transaction_date (date)
+- timestamps
+- index(user_id)
+- index(transaction_date)
+
+## 3. Relacje modelowe
+- Transaction -> user(): belongsTo(User::class)
+- Transaction -> category(): belongsTo(Category::class)
+- User -> transactions(): hasMany(Transaction::class)
+
+## 4. Zakres wdrozenia
+- Kontroler z lista transakcji i filtrowaniem.
+- Widok tabeli z paginacja i badge typu.
+- Migracja tabeli transactions.
+- Testy funkcjonalne listy i filtrowania.
+
+## 5. Wymagania srodowiskowe
+- PHP 8.2+
+- Composer
+- Node.js 18+ oraz npm
+- Baza danych zgodna z konfiguracja .env
+
+## 6. Instrukcja uruchomienia
+1. `composer install`
+2. `cp .env.example .env`
+3. `php artisan key:generate`
+4. `php artisan migrate`
+5. `npm install`
+6. `npm run build`
+7. `php artisan serve`
+
+## 7. Opis filtrowania
+- `type`: income/expense
+- `date_from`: od daty (transaction_date)
+- `date_to`: do daty (transaction_date)
+
+## 8. Scenariusz testowy
+1. Zalogowany uzytkownik widzi swoje transakcje.
+2. Nie widzi transakcji innych uzytkownikow.
+3. Gosc nie ma dostepu.
+4. Filtrowanie po typie dziala.
+5. Paginacja dziala.
+
+## 9. Definition of Done
+- Lista wyswietla tylko dane uzytkownika.
+- Paginacja dziala.
+- Badge typu dziala.
+- Relacja z kategoria dziala.
+- Middleware auth dziala.
+- Filtrowanie dziala.
+- Testy przechodza.
+- Bootstrap + FA dzialaja przez Vite.
+- Dokumentacja istnieje.
+- Kod zgodny ze struktura Laravel.
