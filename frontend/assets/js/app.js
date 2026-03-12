@@ -198,4 +198,39 @@ document.addEventListener('DOMContentLoaded', () => {
         updateCategoryOptions(initialType);
         updateAmountStyle(initialType);
     }
+
+    const filterForm = document.querySelector('[data-filter-form]');
+    if (filterForm) {
+        const dateFrom = filterForm.querySelector('[data-filter-date-from]');
+        const dateTo = filterForm.querySelector('[data-filter-date-to]');
+
+        const validateDateRange = () => {
+            if (!dateFrom || !dateTo) {
+                return true;
+            }
+
+            const fromValue = dateFrom.value;
+            const toValue = dateTo.value;
+            const invalid = fromValue !== '' && toValue !== '' && fromValue > toValue;
+
+            if (invalid) {
+                dateTo.setCustomValidity('Zakres dat jest niepoprawny.');
+            } else {
+                dateTo.setCustomValidity('');
+            }
+
+            setInvalidState(dateTo, invalid, 'is-valid');
+            return !invalid;
+        };
+
+        dateFrom?.addEventListener('input', validateDateRange);
+        dateTo?.addEventListener('input', validateDateRange);
+
+        filterForm.addEventListener('submit', (event) => {
+            if (!validateDateRange()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        });
+    }
 });

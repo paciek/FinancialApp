@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 
@@ -13,28 +14,44 @@ class TransactionController extends Controller
 {
     public function index(Request $request): View
     {
+        $request->validate([
+            'date_from' => 'nullable|date',
+            'date_to' => 'nullable|date|after_or_equal:date_from',
+            'type' => 'nullable|in:income,expense',
+            'category_id' => [
+                'nullable',
+                Rule::exists('categories', 'id')->where('user_id', auth()->id()),
+            ],
+        ]);
+
         $query = Transaction::with('category')
-            ->where('user_id', auth()->id())
-            ->orderByDesc('transaction_date');
+            ->where('user_id', auth()->id());
 
-        $type = $request->string('type')->toString();
-        if (in_array($type, ['income', 'expense'], true)) {
-            $query->where('type', $type);
+        if ($request->filled('date_from')) {
+            $query->whereDate('transaction_date', '>=', $request->date_from);
         }
 
-        $dateFrom = $request->string('date_from')->toString();
-        if ($dateFrom !== '') {
-            $query->whereDate('transaction_date', '>=', $dateFrom);
+        if ($request->filled('date_to')) {
+            $query->whereDate('transaction_date', '<=', $request->date_to);
         }
 
-        $dateTo = $request->string('date_to')->toString();
-        if ($dateTo !== '') {
-            $query->whereDate('transaction_date', '<=', $dateTo);
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
         }
+
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        $query->orderByDesc('transaction_date');
 
         $transactions = $query->paginate(15)->withQueryString();
+        $categories = auth()->user()
+            ->categories()
+            ->orderBy('name')
+            ->get();
 
-        return view('transactions.index', compact('transactions'));
+        return view('transactions.index', compact('transactions', 'categories'));
     }
 
     public function create(): View

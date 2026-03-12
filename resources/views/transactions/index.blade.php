@@ -21,27 +21,52 @@
                             </a>
                         </div>
 
-                        <form method="GET" class="row g-3 align-items-end mb-4">
-                            <div class="col-12 col-md-4">
-                                <label class="form-label" for="type">Typ</label>
-                                <select class="form-select" id="type" name="type">
-                                    <option value="">Wszystkie</option>
-                                    <option value="income" @selected(request('type') === 'income')>Przychod</option>
-                                    <option value="expense" @selected(request('type') === 'expense')>Wydatek</option>
-                                </select>
+                        <div class="card border-0 bg-light-subtle mb-4">
+                            <div class="card-body">
+                                <form method="GET" class="row g-3 align-items-end" data-filter-form>
+                                    <div class="col-12 col-md-3">
+                                        <label class="form-label" for="date_from">Od</label>
+                                        <input type="date" id="date_from" name="date_from" class="form-control" value="{{ request('date_from') }}" data-filter-date-from>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <label class="form-label" for="date_to">Do</label>
+                                        <input type="date" id="date_to" name="date_to" class="form-control" value="{{ request('date_to') }}" data-filter-date-to>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <label class="form-label" for="type">Typ</label>
+                                        <select class="form-select" id="type" name="type">
+                                            <option value="">Wszystkie</option>
+                                            <option value="income" @selected(request('type') === 'income')>Przychod</option>
+                                            <option value="expense" @selected(request('type') === 'expense')>Wydatek</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <label class="form-label" for="category_id">Kategoria</label>
+                                        <select class="form-select" id="category_id" name="category_id">
+                                            <option value="">Wszystkie</option>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}" @selected((string) $category->id === (string) request('category_id'))>
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <button type="submit" class="btn btn-primary w-100">
+                                            <i class="fa-solid fa-filter"></i>
+                                            Filtruj
+                                        </button>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <a href="{{ route('transactions.index') }}" class="btn btn-outline-secondary w-100">
+                                            Wyczysc
+                                        </a>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="col-12 col-md-3">
-                                <label class="form-label" for="date_from">Od</label>
-                                <input type="date" id="date_from" name="date_from" class="form-control" value="{{ request('date_from') }}">
-                            </div>
-                            <div class="col-12 col-md-3">
-                                <label class="form-label" for="date_to">Do</label>
-                                <input type="date" id="date_to" name="date_to" class="form-control" value="{{ request('date_to') }}">
-                            </div>
-                            <div class="col-12 col-md-2">
-                                <button type="submit" class="btn btn-outline-primary w-100">Filtruj</button>
-                            </div>
-                        </form>
+                        </div>
+
+                        <p class="text-muted mb-3">Znaleziono: {{ $transactions->total() }} transakcji</p>
 
                         @if ($transactions->isEmpty())
                             <p class="text-muted mb-0">Brak transakcji do wyswietlenia.</p>
