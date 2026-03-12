@@ -116,4 +116,17 @@ class TransactionController extends Controller
             ->route('transactions.index')
             ->with('success', 'Transakcja zostala zaktualizowana.');
     }
+
+    public function destroy(Transaction $transaction): RedirectResponse
+    {
+        if ($transaction->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $transaction->delete();
+
+        return redirect()
+            ->route('transactions.index')
+            ->with('success', 'Transakcja zostala usunieta.');
+    }
 }

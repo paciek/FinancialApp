@@ -137,10 +137,10 @@
                                                         @endif
 
                                                         @if (Route::has('transactions.destroy'))
-                                                            <form method="POST" action="{{ route('transactions.destroy', $transaction) }}">
+                                                            <form method="POST" action="{{ route('transactions.destroy', $transaction) }}" onsubmit="return confirm('Czy na pewno chcesz usunac te transakcje?')">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit" class="btn btn-outline-danger btn-sm" data-confirm="delete">
+                                                                <button type="submit" class="btn btn-outline-danger btn-sm">
                                                                     <i class="fa-solid fa-trash"></i>
                                                                     Usun
                                                                 </button>
