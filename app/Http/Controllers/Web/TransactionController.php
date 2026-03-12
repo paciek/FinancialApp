@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTransactionRequest;
+use App\Http\Requests\Transaction\UpdateTransactionRequest;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -68,6 +69,20 @@ class TransactionController extends Controller
         return view('transactions.create', compact('categories'));
     }
 
+    public function edit(Transaction $transaction): View
+    {
+        if ($transaction->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $categories = auth()->user()
+            ->categories()
+            ->orderBy('name')
+            ->get();
+
+        return view('transactions.edit', compact('transaction', 'categories'));
+    }
+
     public function store(StoreTransactionRequest $request): RedirectResponse
     {
         Transaction::create([
@@ -82,5 +97,23 @@ class TransactionController extends Controller
         return redirect()
             ->route('transactions.index')
             ->with('success', 'Transakcja została dodana.');
+    }
+    public function update(UpdateTransactionRequest $request, Transaction $transaction): RedirectResponse
+    {
+        if ($transaction->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $transaction->update([
+            'transaction_date' => $request->input('transaction_date'),
+            'amount' => $request->input('amount'),
+            'type' => $request->input('type'),
+            'category_id' => $request->input('category_id'),
+            'description' => $request->input('description'),
+        ]);
+
+        return redirect()
+            ->route('transactions.index')
+            ->with('success', 'Transakcja zostala zaktualizowana.');
     }
 }

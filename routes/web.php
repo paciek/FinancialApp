@@ -21,7 +21,7 @@ Route::middleware('guest')->group(function (): void {
 Route::middleware('auth')->group(function (): void {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::resource('categories', CategoryController::class);
-    Route::resource('transactions', TransactionController::class)->only(['index', 'create', 'store']);
+    Route::resource('transactions', TransactionController::class)->only(['index', 'create', 'store', 'edit', 'update']);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/password', [PasswordController::class, 'edit'])->name('profile.password.edit');

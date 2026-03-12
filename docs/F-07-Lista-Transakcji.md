@@ -64,3 +64,45 @@ Wyswietlenie tabeli wszystkich operacji finansowych zalogowanego uzytkownika z p
 - Bootstrap + FA dzialaja przez Vite.
 - Dokumentacja istnieje.
 - Kod zgodny ze struktura Laravel.
+
+## 10. F-11 — Edycja transakcji
+
+### Endpointy
+- GET /transactions/{transaction}/edit
+- PUT /transactions/{transaction}
+
+### Walidacja
+- transaction_date: required | date
+- amount: required | numeric | min:0
+- type: required | in:income,expense
+- category_id: required | exists:categories,id (user_id = auth)
+- description: nullable | string | max:500
+
+### Formularz
+- data, kwota, typ, kategoria, opis
+- pola wypelnione danymi transakcji
+- bledy walidacji inline
+
+### Przykladowy flow edycji
+1. Uzytkownik otwiera edycje transakcji.
+2. Wprowadza zmiany w formularzu.
+3. Zapisuje i wraca na liste transakcji z komunikatem sukcesu.
+
+### Test cases
+1. Uzytkownik moze otworzyc formularz edycji.
+2. Dane transakcji sa poprawnie wypelnione.
+3. Zapis zmian dziala.
+4. Uzytkownik nie moze edytowac cudzej transakcji.
+5. Walidacja dziala poprawnie.
+
+### Definition of Done
+- Formularz edycji dziala.
+- Dane sa wypelnione w formularzu.
+- Zmiany zapisuja sie w bazie.
+- Uzytkownik moze edytowac tylko swoje transakcje.
+- Bootstrap styling poprawny.
+- FontAwesome dziala.
+- Walidacja dziala poprawnie.
+- Testy przechodza.
+- Dokumentacja zaktualizowana.
+- Kod zgodny ze struktura Laravel.
