@@ -7,6 +7,7 @@
     @include('partials.frontend-assets')
 </head>
 <body class="bg-light">
+    @include('partials.navbar')
     <div class="container-xxl py-5">
         <div class="row">
             <div class="col-12">

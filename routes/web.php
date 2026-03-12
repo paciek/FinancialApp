@@ -5,6 +5,7 @@ use App\Http\Controllers\Web\Auth\RegisterController;
 use App\Http\Controllers\Web\CategoryController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\Profile\PasswordController;
+use App\Http\Controllers\Web\ReportController;
 use App\Http\Controllers\Web\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,7 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::resource('categories', CategoryController::class);
     Route::resource('transactions', TransactionController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+    Route::get('/reports/summary', [ReportController::class, 'financialSummary'])->name('reports.summary');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/password', [PasswordController::class, 'edit'])->name('profile.password.edit');
