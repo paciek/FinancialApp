@@ -18,6 +18,12 @@
                         Podsumowanie
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('export.index') }}">
+                        <i class="fa-solid fa-download"></i>
+                        Eksport danych
+                    </a>
+                </li>
             </ul>
             <form method="POST" action="{{ route('logout') }}" class="d-flex">
                 @csrf

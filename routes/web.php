@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Auth\RegisterController;
 use App\Http\Controllers\Web\CategoryController;
+use App\Http\Controllers\Web\ExportController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\Profile\PasswordController;
 use App\Http\Controllers\Web\ReportController;
@@ -23,6 +24,9 @@ Route::middleware('auth')->group(function (): void {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::resource('categories', CategoryController::class);
     Route::resource('transactions', TransactionController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+    Route::get('/export', [ExportController::class, 'index'])->name('export.index');
+    Route::get('/export/csv', [ExportController::class, 'exportCsv'])->name('export.csv');
+    Route::get('/export/json', [ExportController::class, 'exportJson'])->name('export.json');
     Route::get('/reports/summary', [ReportController::class, 'financialSummary'])->name('reports.summary');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
