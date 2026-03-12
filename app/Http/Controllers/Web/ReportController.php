@@ -22,6 +22,25 @@ class ReportController extends Controller
 
         $balance = $income - $expenses;
 
-        return view('reports.summary', compact('income', 'expenses', 'balance'));
+        $expensesByCategory = Transaction::query()
+            ->where('user_id', $userId)
+            ->where('type', 'expense')
+            ->selectRaw('category_id, SUM(amount) as total')
+            ->groupBy('category_id')
+            ->with('category')
+            ->get();
+
+        $chartLabels = $expensesByCategory->pluck('category.name')->values();
+        $chartData = $expensesByCategory->pluck('total')->values();
+        $chartColors = $expensesByCategory->pluck('category.color')->values();
+
+        return view('reports.summary', [
+            'income' => $income,
+            'expenses' => $expenses,
+            'balance' => $balance,
+            'chartLabels' => $chartLabels,
+            'chartData' => $chartData,
+            'chartColors' => $chartColors,
+        ]);
     }
 }
