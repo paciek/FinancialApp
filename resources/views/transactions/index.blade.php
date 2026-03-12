@@ -7,11 +7,11 @@
     @include('partials.frontend-assets')
 </head>
 <body class="bg-light">
-    <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-12 col-xl-10">
+    <div class="container-xxl py-5">
+        <div class="row">
+            <div class="col-12">
                 @include('partials.alerts')
-                <div class="card form-card">
+                <div class="card form-card form-card--wide">
                     <div class="card-body p-4 p-md-5">
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
                             <h1 class="h4 m-0">Lista transakcji</h1>
@@ -71,12 +71,36 @@
                         @if ($transactions->isEmpty())
                             <p class="text-muted mb-0">Brak transakcji do wyswietlenia.</p>
                         @else
+                            @php
+                                $currentSort = request('sort', 'transaction_date');
+                                $currentDirection = request('direction', 'desc');
+                                $nextDateDirection = $currentSort === 'transaction_date' && $currentDirection === 'asc' ? 'desc' : 'asc';
+                                $nextAmountDirection = $currentSort === 'amount' && $currentDirection === 'asc' ? 'desc' : 'asc';
+                            @endphp
                             <div class="table-responsive">
                                 <table class="table align-middle">
                                     <thead>
                                         <tr>
-                                            <th>Data</th>
-                                            <th>Kwota</th>
+                                            <th>
+                                                <a href="{{ route('transactions.index', array_merge(request()->all(), ['sort' => 'transaction_date', 'direction' => $nextDateDirection])) }}" class="text-decoration-none {{ $currentSort === 'transaction_date' ? 'text-primary' : 'text-body' }}">
+                                                    Data
+                                                    @if ($currentSort === 'transaction_date')
+                                                        <i class="fa-solid {{ $currentDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down' }}"></i>
+                                                    @else
+                                                        <i class="fa-solid fa-sort"></i>
+                                                    @endif
+                                                </a>
+                                            </th>
+                                            <th>
+                                                <a href="{{ route('transactions.index', array_merge(request()->all(), ['sort' => 'amount', 'direction' => $nextAmountDirection])) }}" class="text-decoration-none {{ $currentSort === 'amount' ? 'text-primary' : 'text-body' }}">
+                                                    Kwota
+                                                    @if ($currentSort === 'amount')
+                                                        <i class="fa-solid {{ $currentDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down' }}"></i>
+                                                    @else
+                                                        <i class="fa-solid fa-sort"></i>
+                                                    @endif
+                                                </a>
+                                            </th>
                                             <th>Typ</th>
                                             <th>Kategoria</th>
                                             <th>Opis</th>

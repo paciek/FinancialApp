@@ -22,6 +22,8 @@ class TransactionController extends Controller
                 'nullable',
                 Rule::exists('categories', 'id')->where('user_id', auth()->id()),
             ],
+            'sort' => 'nullable|in:transaction_date,amount',
+            'direction' => 'nullable|in:asc,desc',
         ]);
 
         $query = Transaction::with('category')
@@ -43,7 +45,9 @@ class TransactionController extends Controller
             $query->where('category_id', $request->category_id);
         }
 
-        $query->orderByDesc('transaction_date');
+        $sort = $request->get('sort', 'transaction_date');
+        $direction = $request->get('direction', 'desc');
+        $query->orderBy($sort, $direction);
 
         $transactions = $query->paginate(15)->withQueryString();
         $categories = auth()->user()
