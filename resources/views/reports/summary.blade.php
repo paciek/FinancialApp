@@ -64,6 +64,20 @@
                 </div>
             </div>
         </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="h6 text-uppercase text-muted mb-3">
+                            <i class="fa-solid fa-chart-line"></i>
+                            Saldo w czasie
+                        </h2>
+                        <canvas id="balanceChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -86,6 +100,38 @@
                     plugins: {
                         legend: {
                             position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        const balanceCtx = document.getElementById('balanceChart');
+
+        if (balanceCtx) {
+            new Chart(balanceCtx, {
+                type: 'line',
+                data: {
+                    labels: @json($balanceLabels),
+                    datasets: [{
+                        label: 'Saldo',
+                        data: @json($balanceData),
+                        borderColor: '#0d6efd',
+                        backgroundColor: 'rgba(13,110,253,0.1)',
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
                     }
                 }
