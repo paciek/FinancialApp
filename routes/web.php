@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\Auth\LoginController;
 use App\Http\Controllers\Web\Auth\RegisterController;
 use App\Http\Controllers\Web\CategoryController;
+use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\ExportController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\Profile\PasswordController;
@@ -22,6 +23,7 @@ Route::middleware('guest')->group(function (): void {
 
 Route::middleware('auth')->group(function (): void {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('categories', CategoryController::class);
     Route::resource('transactions', TransactionController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
     Route::get('/export', [ExportController::class, 'index'])->name('export.index');

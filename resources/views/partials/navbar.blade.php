@@ -7,6 +7,12 @@
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('dashboard.index') }}">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('transactions.index') }}">
                         <i class="fa-solid fa-list"></i>
                         Transakcje
