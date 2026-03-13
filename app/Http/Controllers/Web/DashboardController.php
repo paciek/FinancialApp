@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\MonthlyBudget;
 use App\Models\Transaction;
 use Illuminate\View\View;
 
@@ -11,6 +12,8 @@ class DashboardController extends Controller
     public function index(): View
     {
         $userId = auth()->id();
+        $currentMonth = now()->month;
+        $currentYear = now()->year;
 
         $income = Transaction::where('user_id', $userId)
             ->where('type', 'income')
@@ -62,6 +65,22 @@ class DashboardController extends Controller
             ->sortByDesc('total')
             ->first();
 
+        $budget = MonthlyBudget::where('user_id', $userId)
+            ->where('month', $currentMonth)
+            ->where('year', $currentYear)
+            ->first();
+
+        $spent = (float) Transaction::where('user_id', $userId)
+            ->where('type', 'expense')
+            ->whereMonth('transaction_date', $currentMonth)
+            ->whereYear('transaction_date', $currentYear)
+            ->sum('amount');
+
+        $budgetExceeded = $budget && $spent > (float) $budget->limit_amount;
+        $percentage = $budget && (float) $budget->limit_amount > 0
+            ? (int) round(($spent / (float) $budget->limit_amount) * 100)
+            : 0;
+
         return view('dashboard.index', [
             'income' => $income,
             'expenses' => $expenses,
@@ -75,6 +94,10 @@ class DashboardController extends Controller
             'largestIncome' => $largestIncome,
             'largestExpense' => $largestExpense,
             'topExpenseCategory' => $topExpenseCategory,
+            'budget' => $budget,
+            'spent' => $spent,
+            'budgetExceeded' => $budgetExceeded,
+            'percentage' => $percentage,
         ]);
     }
 }

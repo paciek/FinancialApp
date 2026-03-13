@@ -11,6 +11,20 @@
     @include('partials.alerts')
 
     <div class="container py-5">
+        @if ($budgetExceeded)
+            <div class="alert alert-danger d-flex align-items-center mt-3">
+                <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                <div>
+                    Przekroczyles budzet miesieczny.
+                    Limit: {{ number_format((float) ($budget?->limit_amount ?? 0), 2, '.', ' ') }}
+                    Wydano: {{ number_format((float) $spent, 2, '.', ' ') }}
+                    @if ($percentage > 0)
+                        ({{ $percentage }}%)
+                    @endif
+                </div>
+            </div>
+        @endif
+
         <div class="row g-3">
             <div class="col-md-4">
                 <div class="card shadow-sm h-100">
