@@ -1,5 +1,5 @@
-Ôªø<!doctype html>
-<html lang="pl">
+<!doctype html>
+<html lang="pl" data-bs-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -39,7 +39,7 @@
                             </div>
 
                             <div class="mb-4">
-                                <label class="form-label" for="password">Has≈Ço</label>
+                                <label class="form-label" for="password">Has≥o</label>
                                 <div class="input-group has-validation">
                                     <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
                                     <input
@@ -54,7 +54,7 @@
                                     @error('password')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @else
-                                        <div class="invalid-feedback">Podaj has≈Ço.</div>
+                                        <div class="invalid-feedback">Podaj has≥o.</div>
                                     @enderror
                                 </div>
                             </div>
@@ -68,4 +68,5 @@
     </div>
 </body>
 </html>
+
 

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
+<nav class="navbar navbar-expand-lg bg-body border-bottom shadow-sm">
     <div class="container">
         <a class="navbar-brand fw-semibold" href="{{ route('transactions.index') }}">FinancialApp</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Przelacz nawigacje">
@@ -31,7 +31,10 @@
                     </a>
                 </li>
             </ul>
-            <form method="POST" action="{{ route('logout') }}" class="d-flex">
+            <button id="themeToggle" class="btn btn-outline-secondary btn-sm ms-2" title="Przelacz tryb jasny/ciemny" type="button">
+                <i id="themeIcon" class="fa-solid fa-moon"></i>
+            </button>
+            <form method="POST" action="{{ route('logout') }}" class="d-flex ms-2">
                 @csrf
                 <button type="submit" class="btn btn-outline-secondary btn-sm">
                     Wyloguj
@@ -40,3 +43,4 @@
         </div>
     </div>
 </nav>
+

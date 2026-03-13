@@ -85,3 +85,46 @@
     border-radius: 1rem;
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.08);
 }
+
+[data-bs-theme="dark"] {
+    html,
+    body {
+        background-color: #121212;
+        color: #e9ecef;
+    }
+
+    body {
+        background-color: #121212;
+    }
+
+    .bg-light {
+        background-color: #121212 !important;
+    }
+
+    .bg-white {
+        background-color: #1b1f23 !important;
+    }
+
+    .navbar {
+        background-color: #1b1f23 !important;
+    }
+
+    .navbar .navbar-brand,
+    .navbar .nav-link {
+        color: #f8f9fa;
+    }
+
+    .card {
+        background-color: #1f2328;
+    }
+
+    .profile-form-section {
+        background: #1b1f23;
+        border-color: #2a2f35;
+    }
+
+    .border,
+    .border-bottom {
+        border-color: #2a2f35 !important;
+    }
+}

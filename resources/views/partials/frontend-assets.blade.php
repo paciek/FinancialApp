@@ -50,3 +50,4 @@
     <script type="module" src="{{ $viteDevUrl }}/frontend/assets/js/app.js"></script>
 @endif
 
+

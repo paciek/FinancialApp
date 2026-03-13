@@ -2,6 +2,39 @@ import 'bootstrap';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.getElementById('themeToggle');
+    const icon = document.getElementById('themeIcon');
+    const savedTheme = localStorage.getItem('theme');
+
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-bs-theme', savedTheme);
+    } else {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const defaultTheme = prefersDark ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-bs-theme', defaultTheme);
+    }
+
+    const updateIcon = (theme) => {
+        if (!icon) {
+            return;
+        }
+
+        icon.className = theme === 'dark'
+            ? 'fa-solid fa-sun'
+            : 'fa-solid fa-moon';
+    };
+
+    updateIcon(document.documentElement.getAttribute('data-bs-theme'));
+
+    toggle?.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-bs-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-bs-theme', next);
+        localStorage.setItem('theme', next);
+        updateIcon(next);
+    });
+
     const forms = document.querySelectorAll('[data-validate-form], [data-register-form]');
 
     const setInvalidState = (field, invalid, extraClass = null) => {
