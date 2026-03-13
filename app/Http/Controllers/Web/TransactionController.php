@@ -27,8 +27,14 @@ class TransactionController extends Controller
             'direction' => 'nullable|in:asc,desc',
         ]);
 
+        $search = $request->get('search');
+
         $query = Transaction::with('category')
             ->where('user_id', auth()->id());
+
+        if ($search) {
+            $query->where('description', 'like', "%{$search}%");
+        }
 
         if ($request->filled('date_from')) {
             $query->whereDate('transaction_date', '>=', $request->date_from);
@@ -82,6 +88,7 @@ class TransactionController extends Controller
 
         return view('transactions.edit', compact('transaction', 'categories'));
     }
+
 
     public function store(StoreTransactionRequest $request): RedirectResponse
     {

@@ -63,14 +63,35 @@
                                             Wyczysc
                                         </a>
                                     </div>
+                                    @if (request('search'))
+                                        <input type="hidden" name="search" value="{{ request('search') }}">
+                                    @endif
                                 </form>
                             </div>
                         </div>
 
+                        <form method="GET" action="{{ route('transactions.index') }}" class="mb-3">
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    name="search"
+                                    class="form-control"
+                                    placeholder="Szukaj po opisie..."
+                                    value="{{ request('search') }}">
+                                <button class="btn btn-primary" type="submit">
+                                    <i class="fa-solid fa-search"></i>
+                                    Szukaj
+                                </button>
+                            </div>
+                            @foreach (request()->except(['search', 'page']) as $key => $value)
+                                <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                            @endforeach
+                        </form>
+
                         <p class="text-muted mb-3">Znaleziono: {{ $transactions->total() }} transakcji</p>
 
                         @if ($transactions->isEmpty())
-                            <p class="text-muted mb-0">Brak transakcji do wyswietlenia.</p>
+                            <p class="text-muted mb-0">Brak transakcji spelniajacych kryteria.</p>
                         @else
                             @php
                                 $currentSort = request('sort', 'transaction_date');
