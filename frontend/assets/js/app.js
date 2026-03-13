@@ -1,7 +1,13 @@
-import 'bootstrap';
+import * as bootstrap from 'bootstrap';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 document.addEventListener('DOMContentLoaded', () => {
+    const toastElList = document.querySelectorAll('.toast');
+    toastElList.forEach((toastEl) => {
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+    });
+
     const toggle = document.getElementById('themeToggle');
     const icon = document.getElementById('themeIcon');
     const savedTheme = localStorage.getItem('theme');

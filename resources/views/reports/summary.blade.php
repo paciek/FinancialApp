@@ -8,6 +8,7 @@
 </head>
 <body class="bg-light">
     @include('partials.navbar')
+    @include('partials.alerts')
     <div class="container py-5">
         <div class="row g-3">
             <div class="col-md-4">
@@ -140,4 +141,3 @@
     </script>
 </body>
 </html>
-
