@@ -19,6 +19,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('budget.index') }}">
+                        <i class="fa-solid fa-wallet"></i>
+                        Budzet
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('reports.summary') }}">
                         <i class="fa-solid fa-chart-line"></i>
                         Podsumowanie
@@ -43,4 +49,3 @@
         </div>
     </div>
 </nav>
-
