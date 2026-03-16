@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pl" data-bs-theme="light">
 <head>
     <meta charset="utf-8">
@@ -6,16 +6,18 @@
     <title>Export danych</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light">
+<body class="bg-light has-fixed-navbar">
     @include('partials.navbar')
+    
     @include('partials.alerts')
-    <div class="container py-5">
+    <div class="container pt-3 pb-5">
         <div class="row mb-3">
             <div class="col-12">
                 <h1 class="h4">
                     <i class="fa-solid fa-download"></i>
-                    Export danych
+                    Eksport danych
                 </h1>
+                <p class="text-muted mb-0">Pobierz dane i archiwizuj swoje transakcje.</p>
             </div>
         </div>
         <div class="row">
@@ -47,3 +49,9 @@
     </div>
 </body>
 </html>
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pl" data-bs-theme="light">
 <head>
     <meta charset="utf-8">
@@ -6,16 +6,21 @@
     <title>Lista transakcji</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light">
+<body class="bg-light has-fixed-navbar">
     @include('partials.navbar')
-    <div class="container-xxl py-5">
+    
+    <div class="container-xxl pt-3 pb-5">
         <div class="row">
             <div class="col-12">
                 @include('partials.alerts')
+                <div class="mb-4">
+                    <h1 class="h4 fw-semibold mb-1">Transakcje</h1>
+                    <p class="text-muted mb-0">Przeglądaj, filtruj i zarządzaj wpisami.</p>
+                </div>
                 <div class="card form-card form-card--wide">
                     <div class="card-body p-4 p-md-5">
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
-                            <h1 class="h4 m-0">Lista transakcji</h1>
+                            <h2 class="h5 m-0">Lista transakcji</h2>
                             <a href="{{ route('transactions.create') }}" class="btn btn-primary">
                                 <i class="fa-solid fa-plus"></i>
                                 Nowa transakcja
@@ -192,4 +197,10 @@
     </div>
 </body>
 </html>
+
+
+
+
+
+
 

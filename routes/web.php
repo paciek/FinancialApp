@@ -6,13 +6,14 @@ use App\Http\Controllers\Web\BudgetController;
 use App\Http\Controllers\Web\CategoryController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\ExportController;
+use App\Http\Controllers\Web\LandingController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\Profile\PasswordController;
 use App\Http\Controllers\Web\ReportController;
 use App\Http\Controllers\Web\TransactionController;
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/', '/register');
+Route::get('/', [LandingController::class, 'index'])->name('landing.index');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/register', [RegisterController::class, 'showForm'])->name('register');

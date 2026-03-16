@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pl" data-bs-theme="light">
 <head>
     <meta charset="utf-8">
@@ -6,16 +6,21 @@
     <title>Dashboard</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light">
+<body class="bg-light has-fixed-navbar">
     @include('partials.navbar')
+    
     @include('partials.alerts')
 
-    <div class="container py-5">
+    <div class="container pt-3 pb-5">
+        <div class="mb-4">
+            <h1 class="h4 fw-semibold mb-1">Dashboard</h1>
+            <p class="text-muted mb-0">Najważniejsze podsumowanie Twoich finansów.</p>
+        </div>
         @if ($budgetExceeded)
             <div class="alert alert-danger d-flex align-items-center mt-3">
                 <i class="fa-solid fa-triangle-exclamation me-2"></i>
                 <div>
-                    Przekroczyles budzet miesieczny.
+                    Przekroczyłeś budżet miesięczny.
                     Limit: {{ number_format((float) ($budget?->limit_amount ?? 0), 2, '.', ' ') }}
                     Wydano: {{ number_format((float) $spent, 2, '.', ' ') }}
                     @if ($percentage > 0)
@@ -79,7 +84,7 @@
                         </div>
 
                         @if ($recentTransactions->isEmpty())
-                            <p class="text-muted mb-0">Brak transakcji do wyswietlenia.</p>
+                            <p class="text-muted mb-0">Brak transakcji do wyświetlenia.</p>
                         @else
                             <div class="table-responsive">
                                 <table class="table align-middle mb-0">
@@ -94,7 +99,7 @@
                                     <tbody>
                                         @foreach ($recentTransactions as $transaction)
                                             @php
-                                                $typeLabel = $transaction->type === 'income' ? 'Przychod' : 'Wydatek';
+                                                $typeLabel = $transaction->type === 'income' ? 'Przychód' : 'Wydatek';
                                             @endphp
                                             <tr>
                                                 <td>{{ $transaction->transaction_date?->format('Y-m-d') }}</td>
@@ -137,31 +142,31 @@
                             </div>
                             <div class="col-6">
                                 <div class="border rounded p-3 h-100">
-                                    <div class="text-muted text-uppercase small">Sredni przychod</div>
+                                    <div class="text-muted text-uppercase small">Średni przychód</div>
                                     <div class="h6 mb-0 text-success">{{ number_format($averageIncome, 2, '.', ' ') }}</div>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="border rounded p-3 h-100">
-                                    <div class="text-muted text-uppercase small">Sredni wydatek</div>
+                                    <div class="text-muted text-uppercase small">Lsredni wydatek</div>
                                     <div class="h6 mb-0 text-danger">{{ number_format($averageExpense, 2, '.', ' ') }}</div>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="border rounded p-3 h-100">
-                                    <div class="text-muted text-uppercase small">Najwyzszy przychod</div>
+                                    <div class="text-muted text-uppercase small">Najwyższy przychód</div>
                                     <div class="h6 mb-0 text-success">{{ number_format($largestIncome, 2, '.', ' ') }}</div>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="border rounded p-3 h-100">
-                                    <div class="text-muted text-uppercase small">Najwyzszy wydatek</div>
+                                    <div class="text-muted text-uppercase small">Najwyższy wydatek</div>
                                     <div class="h6 mb-0 text-danger">{{ number_format($largestExpense, 2, '.', ' ') }}</div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="border rounded p-3 h-100">
-                                    <div class="text-muted text-uppercase small">Najwyzsza kategoria wydatkow</div>
+                                    <div class="text-muted text-uppercase small">Najwyższa kategoria wydatków</div>
                                     <div class="h6 mb-0">
                                         @if ($topExpenseCategory)
                                             {{ $topExpenseCategory->category?->name ?? '-' }} ({{ number_format((float) $topExpenseCategory->total, 2, '.', ' ') }})
@@ -179,3 +184,10 @@
     </div>
 </body>
 </html>
+
+
+
+
+
+
+

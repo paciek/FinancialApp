@@ -1,5 +1,88 @@
 @import 'bootstrap/scss/bootstrap';
 
+.hero {
+    padding: 45px 0 55px;
+    background: linear-gradient(180deg, #f8f9fb 0%, #f4f7fb 100%);
+    border-bottom: 1px solid #edf0f5;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+    position: relative;
+    top: 10px;
+}
+
+.hero-cta {
+    margin-bottom: 0.75rem;
+}
+
+.auth-page {
+    background: linear-gradient(180deg, #f8f9fb 0%, #f1f4f8 100%);
+}
+
+html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body.bg-light {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.navbar {
+    margin-top: 0 !important;
+}
+
+.has-fixed-navbar {
+    padding-top: 260px !important;
+}
+
+
+.report-page {
+    background: linear-gradient(180deg, #f8f9fb 0%, #f3f6fa 100%);
+}
+
+.chart-card {
+    background: #fff;
+}
+
+.chart-card .card-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 340px;
+}
+
+.chart-title {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.chart-area {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 260px;
+}
+
+.chart-card--line .chart-area {
+    min-height: 220px;
+}
+
+.chart-canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
 .register-card {
     border: 0;
     border-radius: 1rem;
@@ -121,6 +204,23 @@
     .profile-form-section {
         background: #1b1f23;
         border-color: #2a2f35;
+    }
+
+    .hero {
+        background: linear-gradient(180deg, #15181c 0%, #0f1114 100%);
+        border-bottom-color: #2a2f35;
+    }
+
+    .auth-page {
+        background: linear-gradient(180deg, #15181c 0%, #111418 100%);
+    }
+
+    .report-page {
+        background: linear-gradient(180deg, #15181c 0%, #12161b 100%);
+    }
+
+    .chart-card {
+        background: #1f2328;
     }
 
     .border,

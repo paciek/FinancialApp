@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pl" data-bs-theme="light">
 <head>
     <meta charset="utf-8">
@@ -6,22 +6,27 @@
     <title>Kategorie</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light">
-    <div class="container py-5">
+<body class="bg-light has-fixed-navbar">
+    @include('partials.navbar')
+    
+    @include('partials.alerts')
+<div class="container pt-3 pb-5">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8">
-                @include('partials.alerts')
                 <div class="card form-card">
                     <div class="card-body p-4 p-md-5">
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
-                            <h1 class="h4 m-0">Twoje kategorie</h1>
+                            <div>
+                                <h1 class="h4 m-0">Twoje kategorie</h1>
+                                <p class="text-muted mb-0">Zorganizuj transakcje według typów.</p>
+                            </div>
                             <a href="{{ route('categories.create') }}" class="btn btn-primary">
-                                Dodaj kategorie
+                                Dodaj kategorię
                             </a>
                         </div>
 
                         @if ($categories->isEmpty())
-                            <p class="text-muted mb-0">Brak kategorii. Dodaj pierwsza.</p>
+                            <p class="text-muted mb-0">Brak kategorii. Dodaj pierwszą.</p>
                         @else
                             <div class="table-responsive">
                                 <table class="table align-middle">
@@ -35,7 +40,7 @@
                                     <tbody>
                                         @foreach ($categories as $category)
                                             @php
-                                                $typeLabel = $category->type === 'income' ? 'Przychod' : 'Wydatek';
+                                                $typeLabel = $category->type === 'income' ? 'Przychód' : 'Wydatek';
                                             @endphp
                                             <tr>
                                                 <td>{{ $category->name }}</td>
@@ -73,3 +78,13 @@
     </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+

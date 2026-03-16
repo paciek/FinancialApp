@@ -1,11 +1,11 @@
-<nav class="navbar navbar-expand-lg bg-body border-bottom shadow-sm">
-    <div class="container">
+﻿<nav class="navbar navbar-expand-lg bg-body border-bottom shadow-sm fixed-top">
+    <div class="container h-100">
         <a class="navbar-brand fw-semibold" href="{{ route('transactions.index') }}">FinancialApp</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Przelacz nawigacje">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Przełącz nawigację">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="mainNavbar">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div class="collapse navbar-collapse h-100" id="mainNavbar">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('dashboard.index') }}">
                         <i class="fa-solid fa-gauge-high"></i>
@@ -21,7 +21,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('budget.index') }}">
                         <i class="fa-solid fa-wallet"></i>
-                        Budzet
+                        Budżet
                     </a>
                 </li>
                 <li class="nav-item">
@@ -31,21 +31,38 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('categories.index') }}">
+                        <i class="fa-solid fa-tags"></i>
+                        Kategorie
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('export.index') }}">
                         <i class="fa-solid fa-download"></i>
                         Eksport danych
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('profile.edit') }}">
+                        <i class="fa-solid fa-user-gear"></i>
+                        Profil
+                    </a>
+                </li>
             </ul>
-            <button id="themeToggle" class="btn btn-outline-secondary btn-sm ms-2" title="Przelacz tryb jasny/ciemny" type="button">
-                <i id="themeIcon" class="fa-solid fa-moon"></i>
-            </button>
-            <form method="POST" action="{{ route('logout') }}" class="d-flex ms-2">
+            <form method="POST" action="{{ route('logout') }}" class="d-flex ms-2 align-items-center">
                 @csrf
-                <button type="submit" class="btn btn-outline-secondary btn-sm">
+                <button type="submit" class="btn btn-outline-primary btn-sm">
+                    <i class="fa-solid fa-right-from-bracket"></i>
                     Wyloguj
                 </button>
             </form>
+            <button id="themeToggle" class="btn btn-outline-secondary btn-sm ms-2 align-self-center" title="Przełącz tryb jasny/ciemny" type="button">
+                <i class="fa-solid fa-moon"></i>
+            </button>
         </div>
     </div>
 </nav>
+<div style="height: 60px;"></div>
+
+
+

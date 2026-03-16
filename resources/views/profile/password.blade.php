@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pl" data-bs-theme="light">
 <head>
     <meta charset="utf-8">
@@ -6,15 +6,17 @@
     <title>Zmiana hasła</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light">
-    <div class="container py-5">
+<body class="bg-light has-fixed-navbar">
+    @include('partials.navbar')
+    
+    @include('partials.alerts')
+    <div class="container pt-3 pb-5">
         <div class="row justify-content-center">
             <div class="col-12">
-                @include('partials.alerts')
-
                 <div class="card password-change-card">
                     <div class="card-body p-4 p-md-5">
-                        <h1 class="h4 mb-4 text-center">Zmiana hasła</h1>
+                        <h1 class="h4 mb-1 text-center">Zmiana hasła</h1>
+                        <p class="text-muted text-center mb-4">Ustaw nowe, bezpieczne hasło do konta.</p>
 
                         <form method="POST" action="{{ route('profile.password.update') }}" data-validate-form novalidate>
                             @csrf
@@ -95,4 +97,9 @@
     </div>
 </body>
 </html>
+
+
+
+
+
 

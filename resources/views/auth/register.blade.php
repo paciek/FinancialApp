@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pl" data-bs-theme="light">
 <head>
     <meta charset="utf-8">
@@ -6,8 +6,27 @@
     <title>Rejestracja</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light">
-    <div class="container py-5">
+<body class="bg-light auth-page">
+    <nav class="navbar navbar-expand-lg bg-body border-bottom shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-semibold" href="/">FinancialApp</a>
+            <div class="d-flex gap-2 align-items-center">
+                <a href="/login" class="btn btn-outline-primary btn-sm">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    Zaloguj się
+                </a>
+                <a href="/register" class="btn btn-primary btn-sm">
+                    <i class="fa-solid fa-user-plus"></i>
+                    Załóż konto
+                </a>
+                <button id="themeToggle" class="btn btn-outline-secondary btn-sm" title="Przełącz tryb jasny/ciemny" type="button">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container pt-3 pb-5">
         <div class="row justify-content-center">
             <div class="col-12 col-md-9 col-lg-7 col-xl-6">
                 @include('partials.alerts')
@@ -42,7 +61,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label" for="email">Email</label>
+                                <label class="form-label" for="email">E-mail</label>
                                 <div class="input-group has-validation">
                                     <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
                                     <input
@@ -57,13 +76,13 @@
                                     @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @else
-                                        <div class="invalid-feedback">Podaj poprawny adres email.</div>
+                                        <div class="invalid-feedback">Podaj poprawny adres e-mail.</div>
                                     @enderror
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label" for="email_confirmation">Potwierdzenie email</label>
+                                <label class="form-label" for="email_confirmation">Potwierdzenie e-mail</label>
                                 <div class="input-group has-validation">
                                     <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
                                     <input
@@ -78,7 +97,7 @@
                                     @error('email_confirmation')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @else
-                                        <div class="invalid-feedback">Adresy email muszą być identyczne.</div>
+                                        <div class="invalid-feedback">Adresy e-mail muszą być identyczne.</div>
                                     @enderror
                                 </div>
                             </div>
@@ -155,5 +174,4 @@
     </div>
 </body>
 </html>
-
 

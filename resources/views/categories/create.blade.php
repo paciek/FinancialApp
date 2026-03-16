@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pl" data-bs-theme="light">
 <head>
     <meta charset="utf-8">
@@ -6,11 +6,13 @@
     <title>Nowa kategoria</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light">
-    <div class="container py-5">
+<body class="bg-light has-fixed-navbar">
+    @include('partials.navbar')
+    
+    @include('partials.alerts')
+<div class="container pt-3 pb-5">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8">
-                @include('partials.alerts')
                 <div class="card form-card">
                     <div class="card-body p-4 p-md-5">
                         <h1 class="h4 text-center mb-4">Nowa kategoria</h1>
@@ -33,7 +35,7 @@
                                     @error('name')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @else
-                                        <div class="invalid-feedback">Podaj nazwe kategorii.</div>
+                                        <div class="invalid-feedback">Podaj nazwę kategorii.</div>
                                     @enderror
                                 </div>
                             </div>
@@ -52,7 +54,7 @@
                                             @checked(old('type') === 'income')
                                         >
                                         <label class="form-check-label" for="type-income">
-                                            Przychod <span class="badge category-badge category-badge--income">Przychod</span>
+                                            Przychód <span class="badge category-badge category-badge--income">Przychód</span>
                                         </label>
                                     </div>
                                     <div class="form-check">
@@ -86,3 +88,13 @@
     </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+

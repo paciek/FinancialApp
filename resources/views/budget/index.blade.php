@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pl" data-bs-theme="light">
 <head>
     <meta charset="utf-8">
@@ -6,8 +6,9 @@
     <title>Budzet miesieczny</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light">
+<body class="bg-light has-fixed-navbar">
     @include('partials.navbar')
+    
     @include('partials.alerts')
 
     @php
@@ -19,16 +20,17 @@
         }
     @endphp
 
-    <div class="container py-5">
+    <div class="container pt-3 pb-5">
         <div class="row g-4">
             <div class="col-12 col-lg-5">
                 <div class="card form-card">
                     <div class="card-body p-4 p-md-5">
-                        <h1 class="h4 mb-3">
+                        <h1 class="h4 mb-2">
                             <i class="fa-solid fa-wallet"></i>
-                            Budzet miesieczny
+                            Budżet miesięczny
                         </h1>
-                        <p class="text-muted mb-4">Miesiac: {{ $current_month }}/{{ $current_year }}</p>
+                        <p class="text-muted mb-1">Ustaw limit i monitoruj wykorzystanie.</p>
+                        <p class="text-muted mb-4">Miesiąc: {{ $current_month }}/{{ $current_year }}</p>
 
                         <form method="POST" action="{{ route('budget.store') }}">
                             @csrf
@@ -112,3 +114,10 @@
     </div>
 </body>
 </html>
+
+
+
+
+
+
+

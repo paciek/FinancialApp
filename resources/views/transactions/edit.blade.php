@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="pl" data-bs-theme="light">
 <head>
     <meta charset="utf-8">
@@ -8,7 +8,7 @@
 </head>
 <body class="bg-light">
     @include('partials.navbar')
-    <div class="container py-5">
+    <div class="container pt-3 pb-5">
         <div class="row justify-content-center">
             <div class="col-12 col-xl-8">
                 @include('partials.alerts')
@@ -168,4 +168,5 @@
     </div>
 </body>
 </html>
+
 
