@@ -3,12 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Budzet miesieczny</title>
+    <title>Budżet miesięczny</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light has-fixed-navbar">
+<body class="app-shell">
     @include('partials.navbar')
-    
     @include('partials.alerts')
 
     @php
@@ -20,7 +19,18 @@
         }
     @endphp
 
-    <div class="container pt-3 pb-5">
+    <main class="app-main">
+    <div class="container-xxl">
+        <div class="page-header">
+            <div>
+                <span class="page-header__eyebrow">
+                    <i class="fa-solid fa-wallet"></i>
+                    Plan wydatków
+                </span>
+                <h1 class="page-header__title">Budżet miesięczny</h1>
+                <p class="page-header__description">Ustaw limit, obserwuj wykorzystanie i trzymaj finanse w ryzach.</p>
+            </div>
+        </div>
         <div class="row g-4">
             <div class="col-12 col-lg-5">
                 <div class="card form-card">
@@ -34,13 +44,13 @@
 
                         <form method="POST" action="{{ route('budget.store') }}">
                             @csrf
-                            <label class="form-label" for="limit_amount">Limit miesieczny</label>
+                            <label class="form-label" for="limit_amount">Limit miesięczny</label>
                             <input
                                 type="number"
                                 id="limit_amount"
                                 name="limit_amount"
                                 class="form-control @error('limit_amount') is-invalid @enderror"
-                                placeholder="Podaj limit miesieczny"
+                                placeholder="Podaj limit miesięczny"
                                 value="{{ old('limit_amount', $budget?->limit_amount) }}"
                                 min="0"
                                 step="0.01"
@@ -52,7 +62,7 @@
 
                             <button class="btn btn-primary mt-3" type="submit">
                                 <i class="fa-solid fa-wallet"></i>
-                                Zapisz budzet
+                                Zapisz budżet
                             </button>
                         </form>
                     </div>
@@ -60,7 +70,7 @@
             </div>
 
             <div class="col-12 col-lg-7">
-                <div class="card shadow-sm h-100">
+                <div class="card surface-card border-0 h-100">
                     <div class="card-body p-4 p-md-5">
                         <div class="row g-3">
                             <div class="col-12 col-md-4">
@@ -82,7 +92,7 @@
                                 <div class="border rounded p-3 h-100">
                                     <div class="text-muted text-uppercase small">
                                         <i class="fa-solid fa-coins"></i>
-                                        Pozostalo
+                                        Pozostało
                                     </div>
                                     <div class="h5 mb-0 text-success">{{ number_format((float) $remaining_amount, 2, '.', ' ') }}</div>
                                 </div>
@@ -91,7 +101,7 @@
 
                         <div class="mt-4">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="text-muted text-uppercase small">Wykorzystanie budzetu</span>
+                                <span class="text-muted text-uppercase small">Wykorzystanie budżetu</span>
                                 <span class="fw-semibold">{{ $percentage_used }}%</span>
                             </div>
                             <div class="progress">
@@ -112,10 +122,9 @@
             </div>
         </div>
     </div>
+    </main>
 </body>
 </html>
-
-
 
 
 

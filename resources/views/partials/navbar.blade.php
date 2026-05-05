@@ -1,11 +1,18 @@
-﻿<nav class="navbar navbar-expand-lg bg-body border-bottom shadow-sm fixed-top">
-    <div class="container h-100">
-        <a class="navbar-brand fw-semibold" href="{{ route('transactions.index') }}">FinancialApp</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Przełącz nawigację">
+<nav class="navbar navbar-expand-xl app-navbar sticky-top">
+    <div class="container-xxl">
+        <a class="navbar-brand app-navbar__brand" href="{{ route('dashboard.index') }}">
+            <span class="app-navbar__logo">
+                <i class="fa-solid fa-chart-simple"></i>
+            </span>
+            <span>FinancialApp</span>
+        </a>
+
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Przełącz nawigację">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse h-100" id="mainNavbar">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav me-auto mb-3 mb-xl-0 app-navbar__links">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('dashboard.index') }}">
                         <i class="fa-solid fa-gauge-high"></i>
@@ -49,20 +56,19 @@
                     </a>
                 </li>
             </ul>
-            <form method="POST" action="{{ route('logout') }}" class="d-flex ms-2 align-items-center">
-                @csrf
-                <button type="submit" class="btn btn-outline-primary btn-sm">
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    Wyloguj
+
+            <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-xl-center gap-2 app-navbar__actions">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-primary btn-sm w-100">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Wyloguj
+                    </button>
+                </form>
+                <button id="themeToggle" class="btn btn-outline-secondary btn-sm" title="Przełącz tryb jasny/ciemny" type="button">
+                    <i class="fa-solid fa-moon"></i>
                 </button>
-            </form>
-            <button id="themeToggle" class="btn btn-outline-secondary btn-sm ms-2 align-self-center" title="Przełącz tryb jasny/ciemny" type="button">
-                <i class="fa-solid fa-moon"></i>
-            </button>
+            </div>
         </div>
     </div>
 </nav>
-<div style="height: 60px;"></div>
-
-
-

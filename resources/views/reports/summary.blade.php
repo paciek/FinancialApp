@@ -6,52 +6,58 @@
     <title>Podsumowanie finansowe</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light report-page">
+<body class="app-shell report-page">
     @include('partials.navbar')
-    
     @include('partials.alerts')
-    <div class="container pt-3 pb-5">
-        <div class="mb-4">
-            <h1 class="h4 fw-semibold mb-1">Podsumowanie finansowe</h1>
-            <p class="text-muted mb-0">Szybki wgląd w przychody, wydatki i saldo.</p>
+    <main class="app-main">
+    <div class="container-xxl">
+        <div class="page-header">
+            <div>
+                <span class="page-header__eyebrow">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Analiza finansowa
+                </span>
+                <h1 class="page-header__title">Podsumowanie finansowe</h1>
+                <p class="page-header__description">Wykresy i wskaźniki, które pokazują kierunek Twoich finansów.</p>
+            </div>
         </div>
 
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="card shadow-sm h-100 border-0">
-                    <div class="card-body">
+                <div class="card surface-card border-0 h-100">
+                    <div class="card-body stats-card">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
-                                <h2 class="h6 text-uppercase text-muted">Suma przychodów</h2>
-                                <div class="h4 mb-0 text-success">{{ $income }}</div>
+                                <p class="stats-card__label">Suma przychodów</p>
+                                <div class="stats-card__value text-success">{{ $income }}</div>
                             </div>
-                            <i class="fa-solid fa-arrow-up fa-2x text-success"></i>
+                            <span class="stats-card__icon text-success"><i class="fa-solid fa-arrow-trend-up"></i></span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card shadow-sm h-100 border-0">
-                    <div class="card-body">
+                <div class="card surface-card border-0 h-100">
+                    <div class="card-body stats-card">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
-                                <h2 class="h6 text-uppercase text-muted">Suma wydatków</h2>
-                                <div class="h4 mb-0 text-danger">{{ $expenses }}</div>
+                                <p class="stats-card__label">Suma wydatków</p>
+                                <div class="stats-card__value text-danger">{{ $expenses }}</div>
                             </div>
-                            <i class="fa-solid fa-arrow-down fa-2x text-danger"></i>
+                            <span class="stats-card__icon text-danger"><i class="fa-solid fa-arrow-trend-down"></i></span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card shadow-sm h-100 border-0">
-                    <div class="card-body">
+                <div class="card surface-card border-0 h-100">
+                    <div class="card-body stats-card">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
-                                <h2 class="h6 text-uppercase text-muted">Saldo</h2>
-                                <div class="h4 mb-0 text-primary">{{ $balance }}</div>
+                                <p class="stats-card__label">Saldo</p>
+                                <div class="stats-card__value text-primary">{{ $balance }}</div>
                             </div>
-                            <i class="fa-solid fa-wallet fa-2x text-primary"></i>
+                            <span class="stats-card__icon text-primary"><i class="fa-solid fa-wallet"></i></span>
                         </div>
                     </div>
                 </div>
@@ -60,7 +66,7 @@
 
         <div class="row g-4 mt-1">
             <div class="col-lg-5">
-                <div class="card shadow-sm h-100 border-0 chart-card chart-card--donut">
+                <div class="card chart-card chart-card--donut surface-card border-0 h-100">
                     <div class="card-body">
                         <h2 class="chart-title mb-3">
                             <i class="fa-solid fa-chart-pie"></i>
@@ -73,7 +79,7 @@
                 </div>
             </div>
             <div class="col-lg-7">
-                <div class="card shadow-sm border-0 chart-card chart-card--line h-100">
+                <div class="card chart-card chart-card--line surface-card border-0 h-100">
                     <div class="card-body">
                         <h2 class="chart-title mb-3">
                             <i class="fa-solid fa-chart-line"></i>
@@ -87,6 +93,7 @@
             </div>
         </div>
     </div>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -156,7 +163,6 @@
     </script>
 </body>
 </html>
-
 
 
 

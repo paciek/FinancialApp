@@ -6,11 +6,11 @@
     <title>Zmiana hasła</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light has-fixed-navbar">
+<body class="app-shell">
     @include('partials.navbar')
-    
     @include('partials.alerts')
-    <div class="container pt-3 pb-5">
+    <main class="app-main">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="card password-change-card">
@@ -95,9 +95,9 @@
             </div>
         </div>
     </div>
+    </main>
 </body>
 </html>
-
 
 
 

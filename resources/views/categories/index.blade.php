@@ -6,30 +6,41 @@
     <title>Kategorie</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light has-fixed-navbar">
+<body class="app-shell">
     @include('partials.navbar')
-    
     @include('partials.alerts')
-<div class="container pt-3 pb-5">
+    <main class="app-main">
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <span class="page-header__eyebrow">
+                    <i class="fa-solid fa-tags"></i>
+                    Organizacja danych
+                </span>
+                <h1 class="page-header__title">Kategorie</h1>
+                <p class="page-header__description">Porządkuj przychody i wydatki, aby raporty były jeszcze czytelniejsze.</p>
+            </div>
+            <a href="{{ route('categories.create') }}" class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i>
+                Dodaj kategorię
+            </a>
+        </div>
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8">
                 <div class="card form-card">
                     <div class="card-body p-4 p-md-5">
-                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+                        <div class="section-card__header">
                             <div>
-                                <h1 class="h4 m-0">Twoje kategorie</h1>
-                                <p class="text-muted mb-0">Zorganizuj transakcje według typów.</p>
+                                <h2 class="section-card__title">Twoje kategorie</h2>
+                                <p class="section-card__description">Zarządzaj listą kategorii dla bieżących i przyszłych wpisów.</p>
                             </div>
-                            <a href="{{ route('categories.create') }}" class="btn btn-primary">
-                                Dodaj kategorię
-                            </a>
                         </div>
 
                         @if ($categories->isEmpty())
                             <p class="text-muted mb-0">Brak kategorii. Dodaj pierwszą.</p>
                         @else
                             <div class="table-responsive">
-                                <table class="table align-middle">
+                                <table class="table data-table align-middle">
                                     <thead>
                                         <tr>
                                             <th>Nazwa</th>
@@ -60,7 +71,7 @@
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-outline-danger btn-sm" data-confirm="delete">
                                                                 <i class="fa-solid fa-trash"></i>
-                                                                Usun
+                                                                Usuń
                                                             </button>
                                                         </form>
                                                     </div>
@@ -76,9 +87,9 @@
             </div>
         </div>
     </div>
+    </main>
 </body>
 </html>
-
 
 
 

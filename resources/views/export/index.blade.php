@@ -3,26 +3,27 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Export danych</title>
+    <title>Eksport danych</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light has-fixed-navbar">
+<body class="app-shell">
     @include('partials.navbar')
-    
     @include('partials.alerts')
-    <div class="container pt-3 pb-5">
-        <div class="row mb-3">
-            <div class="col-12">
-                <h1 class="h4">
+    <main class="app-main">
+    <div class="container">
+        <div class="page-header">
+            <div>
+                <span class="page-header__eyebrow">
                     <i class="fa-solid fa-download"></i>
-                    Eksport danych
-                </h1>
-                <p class="text-muted mb-0">Pobierz dane i archiwizuj swoje transakcje.</p>
+                    Kopia danych
+                </span>
+                <h1 class="page-header__title">Eksport danych</h1>
+                <p class="page-header__description">Pobierz pliki do analizy, archiwizacji albo importu w innym narzędziu.</p>
             </div>
         </div>
-        <div class="row">
+        <div class="row g-4">
             <div class="col-md-6">
-                <div class="card shadow-sm mt-3">
+                <div class="card surface-card border-0 h-100">
                     <div class="card-body">
                         <h2 class="h5">Eksport CSV</h2>
                         <p class="text-muted">Pobierz wszystkie transakcje w formacie CSV.</p>
@@ -34,7 +35,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card shadow-sm mt-3">
+                <div class="card surface-card border-0 h-100">
                     <div class="card-body">
                         <h2 class="h5">Eksport JSON</h2>
                         <p class="text-muted">Pobierz wszystkie transakcje w formacie JSON.</p>
@@ -47,10 +48,9 @@
             </div>
         </div>
     </div>
+    </main>
 </body>
 </html>
-
-
 
 
 

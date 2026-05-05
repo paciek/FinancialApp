@@ -6,28 +6,38 @@
     <title>Lista transakcji</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light has-fixed-navbar">
+<body class="app-shell">
     @include('partials.navbar')
-    
-    <div class="container-xxl pt-3 pb-5">
+    @include('partials.alerts')
+
+    <main class="app-main">
+    <div class="container-xxl">
+        <div class="page-header">
+            <div>
+                <span class="page-header__eyebrow">
+                    <i class="fa-solid fa-receipt"></i>
+                    Rejestr finansów
+                </span>
+                <h1 class="page-header__title">Transakcje</h1>
+                <p class="page-header__description">Przeglądaj, filtruj i zarządzaj wpisami w wygodnym panelu administracyjnym.</p>
+            </div>
+            <a href="{{ route('transactions.create') }}" class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i>
+                Nowa transakcja
+            </a>
+        </div>
         <div class="row">
             <div class="col-12">
-                @include('partials.alerts')
-                <div class="mb-4">
-                    <h1 class="h4 fw-semibold mb-1">Transakcje</h1>
-                    <p class="text-muted mb-0">Przeglądaj, filtruj i zarządzaj wpisami.</p>
-                </div>
                 <div class="card form-card form-card--wide">
                     <div class="card-body p-4 p-md-5">
-                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
-                            <h2 class="h5 m-0">Lista transakcji</h2>
-                            <a href="{{ route('transactions.create') }}" class="btn btn-primary">
-                                <i class="fa-solid fa-plus"></i>
-                                Nowa transakcja
-                            </a>
+                        <div class="section-card__header">
+                            <div>
+                                <h2 class="section-card__title">Lista transakcji</h2>
+                                <p class="section-card__description">Filtruj wyniki, sortuj dane i szybko przechodź do edycji.</p>
+                            </div>
                         </div>
 
-                        <div class="card border-0 bg-light-subtle mb-4">
+                        <div class="card toolbar-card border-0 mb-4">
                             <div class="card-body">
                                 <form method="GET" class="row g-3 align-items-end" data-filter-form>
                                     <div class="col-12 col-md-3">
@@ -42,7 +52,7 @@
                                         <label class="form-label" for="type">Typ</label>
                                         <select class="form-select" id="type" name="type">
                                             <option value="">Wszystkie</option>
-                                            <option value="income" @selected(request('type') === 'income')>Przychod</option>
+                                            <option value="income" @selected(request('type') === 'income')>Przychód</option>
                                             <option value="expense" @selected(request('type') === 'expense')>Wydatek</option>
                                         </select>
                                     </div>
@@ -65,7 +75,7 @@
                                     </div>
                                     <div class="col-12 col-md-3">
                                         <a href="{{ route('transactions.index') }}" class="btn btn-outline-secondary w-100">
-                                            Wyczysc
+                                            Wyczyść
                                         </a>
                                     </div>
                                     @if (request('search'))
@@ -96,7 +106,7 @@
                         <p class="text-muted mb-3">Znaleziono: {{ $transactions->total() }} transakcji</p>
 
                         @if ($transactions->isEmpty())
-                            <p class="text-muted mb-0">Brak transakcji spelniajacych kryteria.</p>
+                            <p class="text-muted mb-0">Brak transakcji spełniających kryteria.</p>
                         @else
                             @php
                                 $currentSort = request('sort', 'transaction_date');
@@ -105,7 +115,7 @@
                                 $nextAmountDirection = $currentSort === 'amount' && $currentDirection === 'asc' ? 'desc' : 'asc';
                             @endphp
                             <div class="table-responsive">
-                                <table class="table align-middle">
+                                <table class="table data-table align-middle">
                                     <thead>
                                         <tr>
                                             <th>
@@ -137,7 +147,7 @@
                                     <tbody>
                                         @foreach ($transactions as $transaction)
                                             @php
-                                                $typeLabel = $transaction->type === 'income' ? 'Przychod' : 'Wydatek';
+                                                $typeLabel = $transaction->type === 'income' ? 'Przychód' : 'Wydatek';
                                             @endphp
                                             <tr>
                                                 <td>{{ $transaction->transaction_date?->format('Y-m-d') }}</td>
@@ -164,18 +174,18 @@
                                                         @endif
 
                                                         @if (Route::has('transactions.destroy'))
-                                                            <form method="POST" action="{{ route('transactions.destroy', $transaction) }}" onsubmit="return confirm('Czy na pewno chcesz usunac te transakcje?')">
+                                                            <form method="POST" action="{{ route('transactions.destroy', $transaction) }}" onsubmit="return confirm('Czy na pewno chcesz usunąć tę transakcję?')">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="btn btn-outline-danger btn-sm">
                                                                     <i class="fa-solid fa-trash"></i>
-                                                                    Usun
+                                                                    Usuń
                                                                 </button>
                                                             </form>
                                                         @else
                                                             <button type="button" class="btn btn-outline-danger btn-sm" disabled>
                                                                 <i class="fa-solid fa-trash"></i>
-                                                                Usun
+                                                                Usuń
                                                             </button>
                                                         @endif
                                                     </div>
@@ -195,10 +205,9 @@
             </div>
         </div>
     </div>
+    </main>
 </body>
 </html>
-
-
 
 
 

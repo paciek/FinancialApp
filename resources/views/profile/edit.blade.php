@@ -6,11 +6,11 @@
     <title>Edycja profilu</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light has-fixed-navbar">
+<body class="app-shell">
     @include('partials.navbar')
-    
     @include('partials.alerts')
-    <div class="container pt-3 pb-5">
+    <main class="app-main">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8">
                 <div class="card profile-card">
@@ -104,9 +104,9 @@
             </div>
         </div>
     </div>
+    </main>
 </body>
 </html>
-
 
 
 

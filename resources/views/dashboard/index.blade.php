@@ -6,15 +6,21 @@
     <title>Dashboard</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light has-fixed-navbar">
+<body class="app-shell">
     @include('partials.navbar')
-    
     @include('partials.alerts')
 
-    <div class="container pt-3 pb-5">
-        <div class="mb-4">
-            <h1 class="h4 fw-semibold mb-1">Dashboard</h1>
-            <p class="text-muted mb-0">Najważniejsze podsumowanie Twoich finansów.</p>
+    <main class="app-main">
+    <div class="container-xxl">
+        <div class="page-header">
+            <div>
+                <span class="page-header__eyebrow">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    Przegląd finansów
+                </span>
+                <h1 class="page-header__title">Dashboard</h1>
+                <p class="page-header__description">Najważniejsze podsumowanie Twoich finansów w jednym, czytelnym widoku.</p>
+            </div>
         </div>
         @if ($budgetExceeded)
             <div class="alert alert-danger d-flex align-items-center mt-3">
@@ -32,40 +38,40 @@
 
         <div class="row g-3">
             <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
+                <div class="card surface-card border-0 h-100">
+                    <div class="card-body stats-card">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
-                                <h2 class="h6 text-uppercase text-muted">Przychody</h2>
-                                <div class="h4 mb-0 text-success">{{ $income }}</div>
+                                <p class="stats-card__label">Przychody</p>
+                                <div class="stats-card__value text-success">{{ $income }}</div>
                             </div>
-                            <i class="fa-solid fa-arrow-up fa-2x text-success"></i>
+                            <span class="stats-card__icon text-success"><i class="fa-solid fa-arrow-trend-up"></i></span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
+                <div class="card surface-card border-0 h-100">
+                    <div class="card-body stats-card">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
-                                <h2 class="h6 text-uppercase text-muted">Wydatki</h2>
-                                <div class="h4 mb-0 text-danger">{{ $expenses }}</div>
+                                <p class="stats-card__label">Wydatki</p>
+                                <div class="stats-card__value text-danger">{{ $expenses }}</div>
                             </div>
-                            <i class="fa-solid fa-arrow-down fa-2x text-danger"></i>
+                            <span class="stats-card__icon text-danger"><i class="fa-solid fa-arrow-trend-down"></i></span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
+                <div class="card surface-card border-0 h-100">
+                    <div class="card-body stats-card">
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
-                                <h2 class="h6 text-uppercase text-muted">Saldo</h2>
-                                <div class="h4 mb-0 text-primary">{{ $balance }}</div>
+                                <p class="stats-card__label">Saldo</p>
+                                <div class="stats-card__value text-primary">{{ $balance }}</div>
                             </div>
-                            <i class="fa-solid fa-wallet fa-2x text-primary"></i>
+                            <span class="stats-card__icon text-primary"><i class="fa-solid fa-wallet"></i></span>
                         </div>
                     </div>
                 </div>
@@ -74,11 +80,14 @@
 
         <div class="row mt-4 g-3">
             <div class="col-md-6">
-                <div class="card shadow-sm h-100">
+                <div class="card surface-card border-0 h-100">
                     <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <h2 class="h6 text-uppercase text-muted mb-0">Ostatnie transakcje</h2>
-                            <a href="{{ route('transactions.index') }}" class="text-decoration-none">
+                        <div class="section-card__header">
+                            <div>
+                                <h2 class="section-card__title">Ostatnie transakcje</h2>
+                                <p class="section-card__description">Szybki podgląd ostatnio dodanych wpisów.</p>
+                            </div>
+                            <a href="{{ route('transactions.index') }}" class="btn btn-outline-primary btn-sm">
                                 Zobacz wszystkie
                             </a>
                         </div>
@@ -87,7 +96,7 @@
                             <p class="text-muted mb-0">Brak transakcji do wyświetlenia.</p>
                         @else
                             <div class="table-responsive">
-                                <table class="table align-middle mb-0">
+                                <table class="table data-table align-middle mb-0">
                                     <thead>
                                         <tr>
                                             <th>Data</th>
@@ -120,9 +129,9 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card shadow-sm h-100">
+                <div class="card surface-card border-0 h-100">
                     <div class="card-body">
-                        <h2 class="h6 text-uppercase text-muted mb-3">
+                        <h2 class="section-card__title mb-3">
                             <i class="fa-solid fa-chart-pie"></i>
                             Statystyki transakcji
                         </h2>
@@ -148,7 +157,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="border rounded p-3 h-100">
-                                    <div class="text-muted text-uppercase small">Lsredni wydatek</div>
+                                    <div class="text-muted text-uppercase small">Średni wydatek</div>
                                     <div class="h6 mb-0 text-danger">{{ number_format($averageExpense, 2, '.', ' ') }}</div>
                                 </div>
                             </div>
@@ -182,9 +191,9 @@
             </div>
         </div>
     </div>
+    </main>
 </body>
 </html>
-
 
 
 

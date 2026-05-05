@@ -6,15 +6,19 @@
     <title>Nowa transakcja</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light">
+<body class="app-shell">
     @include('partials.navbar')
-    <div class="container pt-3 pb-5">
+    @include('partials.alerts')
+    <main class="app-main">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-xl-8">
-                @include('partials.alerts')
                 <div class="card form-card">
                     <div class="card-body p-4 p-md-5">
-                        <h1 class="h4 text-center mb-4">Nowa transakcja</h1>
+                        <div class="text-center mb-4">
+                            <h1 class="h4 mb-2">Nowa transakcja</h1>
+                            <p class="text-muted mb-0">Dodaj przychód lub wydatek z pełnym opisem i odpowiednią kategorią.</p>
+                        </div>
                         <form method="POST" action="{{ route('transactions.store') }}" data-validate-form data-transaction-form novalidate>
                             @csrf
 
@@ -33,7 +37,7 @@
                                     @error('transaction_date')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @else
-                                        <div class="invalid-feedback">Podaj date transakcji.</div>
+                                        <div class="invalid-feedback">Podaj datę transakcji.</div>
                                     @enderror
                                 </div>
                             </div>
@@ -56,7 +60,7 @@
                                     @error('amount')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @else
-                                        <div class="invalid-feedback">Podaj poprawna kwote.</div>
+                                        <div class="invalid-feedback">Podaj poprawną kwotę.</div>
                                     @enderror
                                 </div>
                             </div>
@@ -75,7 +79,7 @@
                                             data-type-option
                                             @checked(old('type') === 'income')
                                         >
-                                        <label class="form-check-label" for="type-income">Przychod</label>
+                                        <label class="form-check-label" for="type-income">Przychód</label>
                                     </div>
                                     <div class="form-check">
                                         <input
@@ -109,21 +113,21 @@
                                         required
                                         data-category-select
                                     >
-                                        <option value="" disabled @selected(old('category_id') === null)>Wybierz kategorie</option>
+                                        <option value="" disabled @selected(old('category_id') === null)>Wybierz kategorię</option>
                                         @foreach ($categories as $category)
                                             <option
                                                 value="{{ $category->id }}"
                                                 data-type="{{ $category->type }}"
                                                 @selected(old('category_id') == $category->id)
                                             >
-                                                {{ $category->name }} ({{ $category->type === 'income' ? 'Przychod' : 'Wydatek' }})
+                                                {{ $category->name }} ({{ $category->type === 'income' ? 'Przychód' : 'Wydatek' }})
                                             </option>
                                         @endforeach
                                     </select>
                                     @error('category_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @else
-                                        <div class="invalid-feedback">Wybierz kategorie.</div>
+                                        <div class="invalid-feedback">Wybierz kategorię.</div>
                                     @enderror
                                 </div>
                             </div>
@@ -142,7 +146,7 @@
                                     @error('description')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @else
-                                        <div class="invalid-feedback">Opis moze miec maksymalnie 255 znakow.</div>
+                                        <div class="invalid-feedback">Opis może mieć maksymalnie 255 znaków.</div>
                                     @enderror
                                 </div>
                             </div>
@@ -154,7 +158,7 @@
             </div>
         </div>
     </div>
+    </main>
 </body>
 </html>
-
 

@@ -6,16 +6,19 @@
     <title>Edycja kategorii</title>
     @include('partials.frontend-assets')
 </head>
-<body class="bg-light has-fixed-navbar">
+<body class="app-shell">
     @include('partials.navbar')
-    
     @include('partials.alerts')
-<div class="container pt-3 pb-5">
+    <main class="app-main">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8">
                 <div class="card form-card">
                     <div class="card-body p-4 p-md-5">
-                        <h1 class="h4 text-center mb-4">Edycja kategorii</h1>
+                        <div class="text-center mb-4">
+                            <h1 class="h4 mb-2">Edycja kategorii</h1>
+                            <p class="text-muted mb-0">Zmień nazwę lub typ kategorii bez utraty istniejących danych.</p>
+                        </div>
                         <form method="POST" action="{{ route('categories.update', $category) }}" data-validate-form novalidate>
                             @csrf
                             @method('PUT')
@@ -87,9 +90,9 @@
             </div>
         </div>
     </div>
+    </main>
 </body>
 </html>
-
 
 
 
